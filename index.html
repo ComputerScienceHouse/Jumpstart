@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en-US" style="background-color: #891462; margin-top:80px;">
+<html lang="en-US">
 <head>
     <title>Jumpstart</title>
     <meta charset="utf-8">
@@ -10,21 +10,52 @@
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
     <link type="text/css" rel="stylesheet" href="//calendar.google.com/calendar/static/c6011b9dda3a0577ec4249fc8309d70eembedcompiled_fastui.css">
+    <style>
+        html,body{
+            background-color: #891462; 
+            margin-top: 20px;
+        }
+        .datadog {
+            margin-top: 10%;
+            overflow: hidden;
+            border-top:  10px #d91f9c solid;
+            border-bottom:  10px #d91f9c solid; 
+            border-left:  10px #d91f9c solid;
+            border-radius: 30px;
+            width: 1600px; 
+            height: 1000px;
+            max-width: 1100px;
+            max-height: 790px;
+            -webkit-transform: scale(0.8,0.59);
+            -webkit-transform-origin: 0 0;
+        }
+        .csh-logo{
+            margin-left: 25%; 
+            margin-bottom: 7%;
+        }
+        .widget-border{
+            border: 5px solid black;
+        }
+        .widget-border-m{
+            border: 5px solid black;
+            margin-top: 10%;
+        }
+    </style>
 </head>
-<body style="background-color: #891462;">
+<body>
     <div class="container-fluid">
         <div class="row justify-content-around">
-        	<div class="col-md-5" style="align-content: center;" >
-                <img src="CSH_square.png" style="margin-left: 25%; margin-bottom: 10%;">
-                <iframe style="border: 5px solid black;" src="http://free.timeanddate.com/clock/i6zogrqs/n179/fn2/fs36/tct/pct/avt/ftb/pa8/tt0/th2/ts1/tb4" frameborder="0" width="655" height="118" allowTransparency="true" style="margin-top: 10%;"></iframe>
-                <a class="weatherwidget-io" href="https://forecast7.com/en/43d16n77d61/rochester/?unit=us" data-label_1="ROCHESTER" data-icons="Climacons Animated" data-theme="weather_one" style="margin-top: 10%; border: 5px solid black;">ROCHESTER</a>
+        	<div class="col-md-5" style="align-content: center; overflow: hidden;">
+<!--                <img src="CSH_square.png" class="csh-logo">-->
+                <iframe class="widget-border" src="http://free.timeanddate.com/clock/i6zogrqs/n179/fn2/fs36/tct/pct/avt/ftb/pa8/tt0/th2/ts1/tb4" frameborder="0" width="655" height="118" allowTransparency="true"></iframe>
+                <a class="weatherwidget-io widget-border-m" href="https://forecast7.com/en/43d16n77d61/rochester/?unit=us" data-label_1="ROCHESTER" data-icons="Climacons Animated" data-theme="weather_one">ROCHESTER</a>
                 <script>
                     !function(d,s,id){var js,fjs=d.getElementsByTagName(s)[0];if(!d.getElementById(id)){js=d.createElement(s);js.id=id;js.src='https://weatherwidget.io/js/widget.min.js';fjs.parentNode.insertBefore(js,fjs);}}(document,'script','weatherwidget-io-js');
                 </script>
-                <br>
+                <iframe class="datadog" style="overflow:hidden" scrolling="no" frameborder="0" src="https://p.datadoghq.com/sb/44f16805b-cab847d58c"></iframe>
             </div>
             <div class="col-md-7">
-                <iframe src="https://calendar.google.com/calendar/embed?height=600&amp;wkst=1&amp;bgcolor=%23eeeeee&amp;ctz=America%2FNew_York&amp;src=cnRpNjQ4azVodjdqM2FlM2EzcnVtOHBvdGtAZ3JvdXAuY2FsZW5kYXIuZ29vZ2xlLmNvbQ&amp;color=%234285F4&amp;showTitle=0&amp;showNav=0&amp;showDate=0&amp;showPrint=0&amp;showTz=0&amp;showTabs=0&amp;showCalendars=0" style="border: 5px solid black;" width="98%" height="800" frameborder="0" scrolling="no"></iframe>
+                <iframe class="widget-border" src="https://calendar.google.com/calendar/embed?height=600&amp;wkst=1&amp;bgcolor=%23eeeeee&amp;ctz=America%2FNew_York&amp;src=cnRpNjQ4azVodjdqM2FlM2EzcnVtOHBvdGtAZ3JvdXAuY2FsZW5kYXIuZ29vZ2xlLmNvbQ&amp;color=%234285F4&amp;showTitle=0&amp;showNav=0&amp;showDate=0&amp;showPrint=0&amp;showTz=0&amp;showTabs=0&amp;showCalendars=0" width="98%" height="875" frameborder="0" scrolling="no"></iframe>
             </div>
         </div>
     </div>
