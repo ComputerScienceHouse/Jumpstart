@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en-US" style="background-color: #891462;">
+<html lang="en-US" style="background-color: #891462; margin-top:80px;">
 <head>
     <title>Jumpstart</title>
     <meta charset="utf-8">
@@ -27,5 +27,25 @@
             </div>
         </div>
     </div>
+    <script>
+    var lastRefresh = new Date(); // If the user just loaded the page you don't want to refresh either
+    var swap = false;
+    setInterval(function(){
+
+      //first, check time, if it is 9 AM, reload the page
+       var now = new Date();
+       
+       if (swap) { // If it is between 9 and ten AND the last refresh was longer ago than 6 hours refresh the page.
+          location.reload();
+          swap = false;
+       }
+       if(now.getHours() == 1){
+          swap = true;
+       }
+
+      //do other stuff
+
+    }, 1000);
+    </script>
 </body>
 </html>
