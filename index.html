@@ -66,7 +66,7 @@
       //first, check time, if it is 9 AM, reload the page
        var now = new Date();
        
-       if (counter == 0 && now.getMinutes() == 1) { // If it is between 9 and ten AND the last refresh was longer ago than 6 hours refresh the page.
+       if (counter == 0 && (now.getMinutes() == 1 || now.getMinutes() == 30_now.getMinutes() == 1)) { // If it is between 9 and ten AND the last refresh was longer ago than 6 hours refresh the page.
             counter++;
             location.reload();
        }
