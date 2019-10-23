@@ -1,5 +1,6 @@
 html, body{
-    background-color: #891462;
+    background-color: #891462; 
+    margin-top: 20px;
 }
 
 @media screen and (max-width: 1680px) {
@@ -38,10 +39,6 @@ div.version{
     text-align: center;
 }
 
-html,body{
-    background-color: #891462; 
-    margin-top: 20px;
-}
 .datadog {
     margin-top: 10%;
     overflow: hidden;
