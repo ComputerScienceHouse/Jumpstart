@@ -1,6 +1,6 @@
 html, body{
     background-color: #891462; 
-    margin-top: 20px;
+    margin-top: 0px;
 }
 
 @media screen and (max-width: 1680px) {
@@ -40,18 +40,19 @@ div.version{
 }
 
 .datadog {
-    margin-top: 10%;
+    /*margin-top: 10%;*/
     overflow: hidden;
     border-top:  10px #d91f9c solid;
     border-bottom:  10px #d91f9c solid; 
     border-left:  10px #d91f9c solid;
     border-radius: 30px;
-    width: 1600px; 
-    height: 1000px;
+    width: 1100px; 
+    height: 790px;
     max-width: 1100px;
-    max-height: 790px;
-    -webkit-transform: scale(0.8,0.59);
+    -webkit-transform: scale(1,0.59);
+    zoom: .8;
     -webkit-transform-origin: 0 0;
+    margin: 0 calc((-300px * (1 - 0.8)) / 2) calc(-150px * (1 - 0.59));
 }
 .csh-logo{
     margin-left: 25%; 
@@ -62,6 +63,24 @@ div.version{
 }
 .widget-border-m{
     border: 5px solid black;
-    margin-top: 10%;
+    /*margin-top: 10%;*/
 }
 
+.time-frame {
+    background-color: #000000;
+    color: #ffffff;
+    width: 300px;
+    font-family: Arial black;
+}
+
+.time-frame > div {
+    width: 100%;
+    text-align: center;
+}
+
+#date-part {
+    font-size: 1.2em;
+}
+#time-part {
+    font-size: 2em;
+}
