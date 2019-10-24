@@ -1,5 +1,2 @@
-import os
-from flask import Flask
-from flask import render_template
-from flask import jsonify
-from flask import request
+os
+flask==0.10.1
