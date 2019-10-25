@@ -1,58 +1,23 @@
-html, body{
-    background-color: #891462; 
-    margin-top: 0px;
+body{
+    background-image: url('CSH_square.png');
 }
 
-@media screen and (max-width: 1680px) {
-    .panel.panel-primary {
-        margin-left: 40px;
-        margin-right: 40px;
-        margin-top: 60px;
-    }
-}
-
-@media screen and (max-width: 1280px) {
-    .panel.panel-primary {
-        margin-left: 30px;
-        margin-right: 30px;
-        margin-top: 50px;
-    }
-}
-
-@media screen and (max-width: 736px) {
-    .panel.panel-primary {
-        margin-left: 20px;
-        margin-right: 20px;
-        margin-top: 40px;
-    }
-}
-
-@media screen and (max-width: 480px) {
-    .panel.panel-primary {
-        margin-left: 10px;
-        margin-right: 10px;
-        margin-top: 30px;
-    }
-}
-
-div.version{
-    text-align: center;
+#top-bar{
+    border: 5px solid #B0197E;
+    background-color: #34495e;
 }
 
 .datadog {
-    /*margin-top: 10%;*/
     overflow: hidden;
-    border-top:  10px #d91f9c solid;
-    border-bottom:  10px #d91f9c solid; 
-    border-left:  10px #d91f9c solid;
-    border-radius: 30px;
-    width: 1100px; 
+    border: 10px #B0197E solid;
+    border-radius: 20px;
+    width: 1000px; 
     height: 790px;
-    max-width: 1100px;
-    -webkit-transform: scale(1,0.59);
-    zoom: .8;
-    -webkit-transform-origin: 0 0;
-    margin: 0 calc((-300px * (1 - 0.8)) / 2) calc(-150px * (1 - 0.59));
+    float: right;
+    zoom: 1;
+    -webkit-transform: scale(0.45,0.45);
+    -webkit-transform-origin: 90% 70%;
+    margin-right: 3%;
 }
 .csh-logo{
     margin-left: 25%; 
@@ -63,7 +28,6 @@ div.version{
 }
 .widget-border-m{
     border: 5px solid black;
-    /*margin-top: 10%;*/
 }
 
 .time-frame {
@@ -84,3 +48,4 @@ div.version{
 #time-part {
     font-size: 2em;
 }
+
