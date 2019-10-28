@@ -7,45 +7,19 @@ body{
     background-color: #34495e;
 }
 
-.datadog {
+.datadog{
     overflow: hidden;
     border: 10px #B0197E solid;
-    border-radius: 20px;
-    width: 1000px; 
+    border-radius: 10px;
+    width: 1000px;
     height: 790px;
     float: right;
-    zoom: 1;
-    -webkit-transform: scale(0.45,0.45);
-    -webkit-transform-origin: 90% 70%;
-    margin-right: 3%;
-}
-.csh-logo{
-    margin-left: 25%; 
-    margin-bottom: 7%;
-}
-.widget-border{
-    border: 5px solid black;
-}
-.widget-border-m{
-    border: 5px solid black;
+    zoom: 1.1;
+    -webkit-transform: scale(0.70,0.70);
 }
 
-.time-frame {
-    background-color: #000000;
-    color: #ffffff;
-    width: 300px;
-    font-family: Arial black;
+.file-title{
+    color: #fcf6fa;
+    font-family: 'Courier New', Courier, monospace;
+    font-size: 34px;
 }
-
-.time-frame > div {
-    width: 100%;
-    text-align: center;
-}
-
-#date-part {
-    font-size: 1.2em;
-}
-#time-part {
-    font-size: 2em;
-}
-
