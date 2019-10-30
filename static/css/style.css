@@ -1,5 +1,5 @@
 body{
-    background-image: url('CSH_square.png');
+    /*background-image: url('lightmode.png');*/
 }
 
 #top-bar{
@@ -21,5 +21,18 @@ body{
 .file-title{
     color: #fcf6fa;
     font-family: 'Courier New', Courier, monospace;
-    font-size: 34px;
+    font-size: 25px;
+}
+
+.calendar-frame{
+    background-color: #34495e;
+    border: 5px #B0197E solid;
+    border-radius: 15px;
+    margin-top: 5%;
+}
+
+.calendar-text{
+    color: #fcf6fa;
+    font-family: 'Courier New', Courier, monospace;
+    font-size: 15px;
 }
