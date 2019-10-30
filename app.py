@@ -8,6 +8,7 @@ from google.auth.transport.requests import Request
 from flask import *
 from json import *
 from flask_sqlalchemy import SQLAlchemy
+from dateutil import parser, tz
 
 app = Flask(__name__)
 app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = True
@@ -29,6 +30,13 @@ def index():
 
 @app.route('/calendar', methods=['GET'])
 def calendar():
+	now = datetime.datetime.now()
+	year = now.year
+	month = now.month
+	day = now.day
+	hour = '{:02d}'.format(now.hour)
+	minute = '{:02d}'.format(now.minute)
+
 	"""Shows basic usage of the Google Calendar API.
     Prints the start and name of the next 10 events on the user's calendar.
     """
@@ -54,18 +62,22 @@ def calendar():
 
     # Call the Calendar API
 	now = datetime.datetime.utcnow().isoformat() + 'Z' # 'Z' indicates UTC time
-	events_result = service.events().list(calendarId='rti648k5hv7j3ae3a3rum8potk@group.calendar.google.com', timeMin=now,maxResults=10, singleEvents=True,orderBy='startTime').execute()
+	events_result = service.events().list(calendarId='rti648k5hv7j3ae3a3rum8potk@group.calendar.google.com', timeMin=now,maxResults=9, singleEvents=True,orderBy='startTime').execute()
 	events = events_result.get('items', [])
 
-	finalEvents = ""
+	# finalEvents = "Today: " + str(month) + "/" + str(day) + "/" + str(year)
+	finalEvents = "<br><span class='calendar-text-date' style='padding-left: 6%;'>Current time: " + str(hour) + ":" + str(minute) + "</span><br><hr style='border: 3px #e21a52 solid;'>"
 
 	if not events:
 		print('No upcoming events found.')
 	for event in events:
 		start = event['start'].get('dateTime', event['start'].get('date'))
-		# finalEvents += start
-		finalEvents += ''.join(event['summary'])
-		finalEvents += "<br><br>"
+		parser.parserinfo(dayfirst=False, yearfirst=False)
+		parsedOld = str(parser.parse(start, fuzzy_with_tokens=False))
+		parsed = parsedOld.replace(str(year), "", 1).replace(str(year+1), "", 1).replace(str(month), "", 1).replace(str(month+1), "", 1).replace(str(day), "Today at ", 1).replace(str(day+1), "Tomorrow at ", 1).replace(str(day+2), "In two days at ", 1).replace(str(day+3), "In three days at ", 1).replace(str(day+4), "In four days at ", 1).replace(str(day+5), "In five days at ", 1).replace(str(day+6), " ", 1).replace("-", "").replace(":0004:00", " -- <br>")
+		finalEvents += "<div class='calendar-event-container-lvl2'><span class='calendar-text-date'>" + parsed + "</span>"
+		finalEvents += "<span class='calendar-text' id='calendar'>" + ''.join(event['summary']) + "</span></div>"
+		finalEvents += "<hr style='border: 1px #B0197E solid;'>"
 
 	eventList = {'data': finalEvents}
 	return jsonify(eventList)

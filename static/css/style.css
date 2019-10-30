@@ -1,7 +1,3 @@
-body{
-    /*background-image: url('lightmode.png');*/
-}
-
 #top-bar{
     border: 5px solid #B0197E;
     background-color: #34495e;
@@ -9,30 +5,47 @@ body{
 
 .datadog{
     overflow: hidden;
-    border: 10px #B0197E solid;
+    border: 8px #B0197E solid;
     border-radius: 10px;
     width: 1000px;
     height: 790px;
     float: right;
     zoom: 1.1;
-    -webkit-transform: scale(0.70,0.70);
+    -webkit-transform: scale(0.7,0.7);
+    -webkit-transform-origin: 100% 6%;
 }
 
 .file-title{
     color: #fcf6fa;
     font-family: 'Courier New', Courier, monospace;
-    font-size: 25px;
+    font-size: 34px;
 }
 
-.calendar-frame{
-    background-color: #34495e;
+.calendar-frame-lvl1{
+    background-color: #fcf6fa;
     border: 5px #B0197E solid;
-    border-radius: 15px;
+    border-radius: 10px;
     margin-top: 5%;
+    height: 940px;
+    max-height: 940px;
+    overflow: hidden;
+}
+
+.calendar-event-container-lvl2{
+    padding-right: 2%;
+    padding-left: 2%;
+}
+
+.calendar-text-date{
+    color: #4c4c4c;
+    font-family: 'Courier New', Courier, monospace;
+    font-size: 20px;
+    text-shadow: 2px 2px 3px rgb(176,25,126, 0.5);
+    text-align: center;
 }
 
 .calendar-text{
-    color: #fcf6fa;
+    color: black;
     font-family: 'Courier New', Courier, monospace;
-    font-size: 15px;
+    font-size: 19px;
 }
