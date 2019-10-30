@@ -36,11 +36,19 @@
 setInterval(function(){
     var date = new Date();
     if(9 < date.getHours() < 21){
-        $("body").css("background-image", "url(../static/css/lightmode.png)");
+        if (date.getMonth()+1 == 10 && (date.getDate() == 29 || date.getDate() == 30 || date.getDate() == 31) ) {
+            $("body").css("background-image", "url(../static/css/spookymode.png)");
+        }else{
+            $("body").css("background-image", "url(../static/css/lightmode.png)");
+        }
     }else{
-        $("body").css("background-image", "url(../static/css/darkmode.png)");
+        if (date.getMonth() == 10 && (date.getDay() == 29 || date.getDay() == 30 || date.getDay() == 31) ) {
+            $("body").css("background-image", "url(../static/css/spookymode.png)");
+        }else{
+            $("body").css("background-image", "url(../static/css/darkmode.png)");
+        }
     }
-}, 60000);
+}, 1000);
 
 // setInterval(function(){ 
 //     fetch('http://localhost/getdata-reset', {
@@ -70,7 +78,7 @@ setInterval(function(){
 
     document.getElementById("weather-image").src = "https://w.bookcdn.com/weather/picture/26_1500_0_1_34495e_250_2c3e50_ffffff_ffffff_1_2071c9_ffffff_0_6.png?scode=124&domid=w209&anc_id=23470&" + new Date().getTime();
 
-}, 60000);
+}, 1000);
 </script>
 </body>
 </html>
