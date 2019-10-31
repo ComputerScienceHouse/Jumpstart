@@ -107,13 +107,14 @@ def calendar():
 		for j in range(0, 8):
 			del semiFinalDate[0]
 
-		for i in range(0, 6):
+		for i in range(0, 9):
 			del semiFinalDate[len(semiFinalDate)-1]
 
 		finalDate = ''.join(semiFinalDate)
 		
+		finalfinalDate = finalDate.replace("T", "", 1).replace(today, "Today at ").replace(tomorrow, "Tomorrow at ")
 
-		finalEvents += "<div class='calendar-event-container-lvl2'><span class='calendar-text-date'>" + finalDate + "</span>"
+		finalEvents += "<div class='calendar-event-container-lvl2'><span class='calendar-text-date'>" + finalfinalDate + " " + "</span>"
 		finalEvents += "<span class='calendar-text' id='calendar'>" + ''.join(event['summary']) + "</span></div>"
 		finalEvents += "<hr style='border: 1px #B0197E solid;'>"
 
