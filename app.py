@@ -80,7 +80,7 @@ def calendar():
 	events_result = service.events().list(calendarId='rti648k5hv7j3ae3a3rum8potk@group.calendar.google.com', timeMin=now,maxResults=9, singleEvents=True,orderBy='startTime').execute()
 	events = events_result.get('items', [])
 
-	finalEvents = ""
+	finalEvents = "<br>"
 
 	# finalEvents = "<br><span class='calendar-text-date' style='padding-left: 6%;'>Current time: " + str(hour) + ":" + str(minute) + "</span><br><hr style='border: 3px #e21a52 solid;'>"
 
