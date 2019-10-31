@@ -8,14 +8,15 @@ from google.auth.transport.requests import Request
 from flask import *
 from json import *
 from flask_sqlalchemy import SQLAlchemy
-from dateutil import parser, tz
+from dateutil import parser
+from flask_limiter import Limiter
+from flask_limiter.util import get_remote_address
 
 app = Flask(__name__)
+
 app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = True
 app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///site.db'
 db = SQLAlchemy(app)
-# If modifying these scopes, delete the file token.pickle.
-SCOPES = ['https://www.googleapis.com/auth/calendar.readonly']
 
 class File(db.Model):
 	id = db.Column(db.Integer, primary_key=True)
@@ -24,11 +25,25 @@ class File(db.Model):
 	def __repr__(self):
 		return f"{self.title}"
 
+# If modifying these scopes, delete the file token.pickle.
+SCOPES = ['https://www.googleapis.com/auth/calendar.readonly']
+
+limiter = Limiter(
+    app,
+    key_func=get_remote_address,
+    default_limits=["2 per minute", "1 per second"],
+)
+
+@limiter.request_filter
+def ip_whitelist():
+	return request.remote_addr == "127.0.0.1"
+
 @app.route('/')
 def index():
 	return render_template('index.html')
 
 @app.route('/calendar', methods=['GET'])
+@limiter.limit("0/minute")
 def calendar():
 	now = datetime.datetime.now()
 	year = now.year
@@ -65,8 +80,9 @@ def calendar():
 	events_result = service.events().list(calendarId='rti648k5hv7j3ae3a3rum8potk@group.calendar.google.com', timeMin=now,maxResults=9, singleEvents=True,orderBy='startTime').execute()
 	events = events_result.get('items', [])
 
-	# finalEvents = "Today: " + str(month) + "/" + str(day) + "/" + str(year)
-	finalEvents = "<br><span class='calendar-text-date' style='padding-left: 6%;'>Current time: " + str(hour) + ":" + str(minute) + "</span><br><hr style='border: 3px #e21a52 solid;'>"
+	finalEvents = ""
+
+	# finalEvents = "<br><span class='calendar-text-date' style='padding-left: 6%;'>Current time: " + str(hour) + ":" + str(minute) + "</span><br><hr style='border: 3px #e21a52 solid;'>"
 
 	if not events:
 		print('No upcoming events found.')
