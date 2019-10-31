@@ -23,7 +23,7 @@
         </div>
         <div class="row justify-content-around">
             <div class="col-md-10" style="align-content: left; overflow: hidden;" align="left">
-                <iframe class="datadog" scrolling="no" frameborder="0" src="https://p.datadoghq.com/sb/44f16805b-cab847d58c"></iframe>
+                <iframe class="datadog" scrolling="no" frameborder="0" src="https://p.datadoghq.com/sb/44f16805b-cab847d58c?tv_mode=true"></iframe>
             </div>
             <div class="col-md-2">
                 <div class="calendar-frame-lvl1" style="float: right;" width="" height="940" frameborder="0" scrolling="no">
@@ -52,7 +52,7 @@ setInterval(function(){
 }, 60000);
 
 // setInterval(function(){ 
-//     fetch('http://localhost/getdata-reset', {
+//     fetch('/getdata-reset', {
 //         method: 'GET',
 //         mode:'no-cors',
 //         dataType: 'json'
@@ -66,7 +66,7 @@ setInterval(function(){
 // }, 5000);
 
 setInterval(function(){ 
-    fetch('http://localhost/calendar', {
+    fetch('/calendar', {
         method: 'GET',
         mode:'no-cors',
         dataType: 'json'

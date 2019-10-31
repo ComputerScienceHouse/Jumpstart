@@ -46,11 +46,10 @@ def index():
 @limiter.limit("0/minute")
 def calendar():
 	now = datetime.datetime.now()
-	year = now.year
-	month = now.month
-	day = now.day
-	hour = '{:02d}'.format(now.hour)
-	minute = '{:02d}'.format(now.minute)
+	today = datetime.datetime.today().strftime ('%d') # format the date to ddmmyyyy
+	 
+	tomorrow_date = datetime.datetime.today() + datetime.timedelta(days=1)
+	tomorrow = tomorrow_date.strftime ('%d') # format the date to ddmmyyyy
 
 	"""Shows basic usage of the Google Calendar API.
     Prints the start and name of the next 10 events on the user's calendar.
@@ -82,16 +81,25 @@ def calendar():
 
 	finalEvents = "<br>"
 
-	# finalEvents = "<br><span class='calendar-text-date' style='padding-left: 6%;'>Current time: " + str(hour) + ":" + str(minute) + "</span><br><hr style='border: 3px #e21a52 solid;'>"
-
 	if not events:
 		print('No upcoming events found.')
 	for event in events:
 		start = event['start'].get('dateTime', event['start'].get('date'))
-		parser.parserinfo(dayfirst=False, yearfirst=False)
-		parsedOld = str(parser.parse(start, fuzzy_with_tokens=False))
-		parsed = parsedOld.replace(str(year), "", 1).replace(str(year+1), "", 1).replace(str(month), "", 1).replace(str(month+1), "", 1).replace(str(day), "Today at ", 1).replace(str(day+1), "Tomorrow at ", 1).replace(str(day+2), "In two days at ", 1).replace(str(day+3), "In three days at ", 1).replace(str(day+4), "In four days at ", 1).replace(str(day+5), "In five days at ", 1).replace(str(day+6), " ", 1).replace("-", "").replace(":0004:00", " -- <br>")
-		finalEvents += "<div class='calendar-event-container-lvl2'><span class='calendar-text-date'>" + parsed + "</span>"
+		
+		finalDate = ""
+
+		semiFinalDate = list(start)
+
+		for j in range(0, 8):
+			del semiFinalDate[0]
+
+		for i in range(0, 6):
+			del semiFinalDate[len(semiFinalDate)]
+
+		finalDate = ''.join(semiFinalDate)
+		
+
+		finalEvents += "<div class='calendar-event-container-lvl2'><span class='calendar-text-date'>" + finalDate + "</span>"
 		finalEvents += "<span class='calendar-text' id='calendar'>" + ''.join(event['summary']) + "</span></div>"
 		finalEvents += "<hr style='border: 1px #B0197E solid;'>"
 
