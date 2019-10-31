@@ -16,10 +16,10 @@
     <div class="container-fluid">
         <div class="row" id="top-bar" align="left">
             <a target="_blank" style="float: left;" href="https://www.booked.net/weather/rochester-1500"><img id="weather-image" src="https://w.bookcdn.com/weather/picture/26_1500_0_1_34495e_250_2c3e50_ffffff_ffffff_1_2071c9_ffffff_0_6.png?scode=124&domid=w209&anc_id=23470"  alt="booked.net"/></a>
-            <iframe style="-webkit-transform-origin: 5%  60%; -webkit-transform: scale(.50,.50); float: left;" src="http://free.timeanddate.com/clock/i6zogrqs/n179/fn8/fs45/fcfcf6fa/tct/pct/ahl/ftb/tt0/tm3/th2/ts1/tb1" frameborder="0" width="1002" height="53" allowTransparency="true"></iframe>
+            <iframe style="-webkit-transform-origin: 5%  60%; -webkit-transform: scale(.50,.50); float: left;" src="https://free.timeanddate.com/clock/i6zogrqs/n179/fn8/fs45/fcfcf6fa/tct/pct/ahl/ftb/tt0/tm3/th2/ts1/tb1" frameborder="0" width="1002" height="53" allowTransparency="true"></iframe>
 
-<!--            <b style="margin-top: 10px;"><span class="file-title">Last File:</span><span class="file-title" id="harold-file-name"> </span></b>
--->        
+            <b style="margin-top: 10px;"><span class="file-title">Last File:</span><span class="file-title" id="harold-file-name"> </span></b>
+        
         </div>
         <div class="row justify-content-around">
             <div class="col-md-10" style="align-content: left; overflow: hidden;" align="left">
@@ -43,7 +43,7 @@ setInterval(function(){
             $("body").css("background-image", "url(../static/css/lightmode.png)");
         }
     }else{
-        if (date.getMonth() == 10 && (date.getDay() == 29 || date.getDay() == 30 || date.getDay() == 31) ) {
+        if (date.getMonth()+1 == 10 && (date.getDay() == 29 || date.getDay() == 30 || date.getDay() == 31) ) {
             $("body").css("background-image", "url(../static/css/spookymode.png)");
         }else{
             $("body").css("background-image", "url(../static/css/darkmode.png)");
@@ -51,19 +51,19 @@ setInterval(function(){
     }
 }, 60000);
 
-// setInterval(function(){ 
-//     fetch('/getdata-reset', {
-//         method: 'GET',
-//         mode:'no-cors',
-//         dataType: 'json'
-//     })
-//     .then(r => r.json())
-//     .then(r => {
-//         $("#harold-file-name").text(r.data)
-//     })
-//     .catch(err => console.log(err))
+setInterval(function(){ 
+    fetch('/getdata-reset', {
+        method: 'GET',
+        mode:'no-cors',
+        dataType: 'json'
+    })
+    .then(r => r.json())
+    .then(r => {
+        $("#harold-file-name").text(r.data)
+    })
+    .catch(err => console.log(err))
 
-// }, 5000);
+}, 5000);
 
 setInterval(function(){ 
     fetch('/calendar', {

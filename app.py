@@ -1,18 +1,32 @@
 from __future__ import print_function
 import datetime
 import pickle
-import os.path
+import os
 from googleapiclient.discovery import build
 from google_auth_oauthlib.flow import InstalledAppFlow
 from google.auth.transport.requests import Request
-from flask import *
+from flask import Flask, request, render_template, jsonify, redirect
 from json import *
 from flask_sqlalchemy import SQLAlchemy
 from dateutil import parser
 from flask_limiter import Limiter
 from flask_limiter.util import get_remote_address
+from flask_httpauth import HTTPTokenAuth
+from apiclient.discovery import build
+from oauth2client.service_account import ServiceAccountCredentials
 
 app = Flask(__name__)
+
+auth = HTTPTokenAuth(scheme='Token')
+
+api_keys = os.environ.get('JUMPSTART_API_KEYS')
+tokens = api_keys.split(',') if api_keys else []
+
+@auth.verify_token
+def verify_token(token):
+	if token in tokens:
+		return True
+	return False
 
 app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = True
 app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///site.db'
@@ -31,8 +45,31 @@ SCOPES = ['https://www.googleapis.com/auth/calendar.readonly']
 limiter = Limiter(
     app,
     key_func=get_remote_address,
-    default_limits=["2 per minute", "1 per second"],
+    default_limits=["21 per minute", "1 per second"],
 )
+
+def get_service(api_name, api_version, scopes, key_file_location):
+    """Get a service that communicates to a Google API.
+
+    Args:
+        api_name: The name of the api to connect to.
+        api_version: The api version to connect to.
+        scopes: A list auth scopes to authorize for the application.
+        key_file_location: The path to a valid service account JSON key file.
+
+    Returns:
+        A service that is connected to the specified API.
+    """
+
+    credentials = ServiceAccountCredentials.from_json_keyfile_name(key_file_location, scopes=scopes)
+
+    # Build the service object.
+    service = build(api_name, api_version, credentials=credentials)
+
+    return service
+
+# Authenticate and construct service.
+service = get_service(api_name='calendar', api_version='v3', scopes=SCOPES, key_file_location=os.path.join(os.getcwd(), "secrets", "client_secrets.json"))
 
 @limiter.request_filter
 def ip_whitelist():
@@ -43,36 +80,13 @@ def index():
 	return render_template('index.html')
 
 @app.route('/calendar', methods=['GET'])
-@limiter.limit("0/minute")
+@limiter.limit("125/minute")
 def calendar():
 	now = datetime.datetime.now()
 	today = datetime.datetime.today().strftime ('%d') # format the date to ddmmyyyy
 	 
 	tomorrow_date = datetime.datetime.today() + datetime.timedelta(days=1)
 	tomorrow = tomorrow_date.strftime ('%d') # format the date to ddmmyyyy
-
-	"""Shows basic usage of the Google Calendar API.
-    Prints the start and name of the next 10 events on the user's calendar.
-    """
-	creds = None
-    # The file token.pickle stores the user's access and refresh tokens, and is
-    # created automatically when the authorization flow completes for the first
-    # time.
-	if os.path.exists('token.pickle'):
-		with open('token.pickle', 'rb') as token:
-			creds = pickle.load(token)
-    # If there are no (valid) credentials available, let the user log in.
-	if not creds or not creds.valid:
-		if creds and creds.expired and creds.refresh_token:
-			creds.refresh(Request())
-		else:
-			flow = InstalledAppFlow.from_client_secrets_file('credentials.json', SCOPES)
-			creds = flow.run_local_server(port=0)
-        # Save the credentials for the next run
-		with open('token.pickle', 'wb') as token:
-			pickle.dump(creds, token)
-
-	service = build('calendar', 'v3', credentials=creds)
 
     # Call the Calendar API
 	now = datetime.datetime.utcnow().isoformat() + 'Z' # 'Z' indicates UTC time
@@ -94,7 +108,7 @@ def calendar():
 			del semiFinalDate[0]
 
 		for i in range(0, 6):
-			del semiFinalDate[len(semiFinalDate)]
+			del semiFinalDate[len(semiFinalDate)-1]
 
 		finalDate = ''.join(semiFinalDate)
 		
@@ -128,6 +142,7 @@ def add():
 		return jsonify(filename)
 
 @app.route("/update", methods=["POST"])
+@auth.login_required
 def update():
 	try:
 		req_data = request.get_json()
@@ -138,7 +153,7 @@ def update():
 	except Exception as e:
 		print("Couldn't update File")
 		print(e)
-	return redirect("/")
+	return "It worked"
 
 if __name__ == '__main__':
 	app.run(debug=True)
