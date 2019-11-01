@@ -1,26 +1,31 @@
 from __future__ import print_function
-import datetime
-import pickle
 import os
+import datetime
 from googleapiclient.discovery import build
 from google_auth_oauthlib.flow import InstalledAppFlow
 from google.auth.transport.requests import Request
 from flask import Flask, request, render_template, jsonify, redirect
 from json import *
-from flask_sqlalchemy import SQLAlchemy
-from dateutil import parser
 from flask_limiter import Limiter
 from flask_limiter.util import get_remote_address
 from flask_httpauth import HTTPTokenAuth
-from apiclient.discovery import build
-from oauth2client.service_account import ServiceAccountCredentials
+from flask_sqlalchemy import SQLAlchemy
+from jumpstart.google import calendar_service
 
 app = Flask(__name__)
 
 auth = HTTPTokenAuth(scheme='Token')
-
 api_keys = os.environ.get('JUMPSTART_API_KEYS')
+
 tokens = api_keys.split(',') if api_keys else []
+app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = True
+app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///site.db'
+db = SQLAlchemy(app)
+
+from jumpstart.models import File
+
+if not os.path.exists(os.path.join(os.getcwd(), "site.db")):
+	db.create_all()
 
 @auth.verify_token
 def verify_token(token):
@@ -28,48 +33,12 @@ def verify_token(token):
 		return True
 	return False
 
-app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = True
-app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///site.db'
-db = SQLAlchemy(app)
-
-class File(db.Model):
-	id = db.Column(db.Integer, primary_key=True)
-	title = db.Column(db.String(80), nullable=False)
-
-	def __repr__(self):
-		return f"{self.title}"
-
-# If modifying these scopes, delete the file token.pickle.
-SCOPES = ['https://www.googleapis.com/auth/calendar.readonly']
 
 limiter = Limiter(
     app,
     key_func=get_remote_address,
     default_limits=["21 per minute", "1 per second"],
 )
-
-def get_service(api_name, api_version, scopes, key_file_location):
-    """Get a service that communicates to a Google API.
-
-    Args:
-        api_name: The name of the api to connect to.
-        api_version: The api version to connect to.
-        scopes: A list auth scopes to authorize for the application.
-        key_file_location: The path to a valid service account JSON key file.
-
-    Returns:
-        A service that is connected to the specified API.
-    """
-
-    credentials = ServiceAccountCredentials.from_json_keyfile_name(key_file_location, scopes=scopes)
-
-    # Build the service object.
-    service = build(api_name, api_version, credentials=credentials)
-
-    return service
-
-# Authenticate and construct service.
-service = get_service(api_name='calendar', api_version='v3', scopes=SCOPES, key_file_location=os.path.join(os.getcwd(), "secrets", "client_secrets.json"))
 
 @limiter.request_filter
 def ip_whitelist():
@@ -86,11 +55,14 @@ def calendar():
 	today = datetime.datetime.today().strftime ('%d') # format the date to ddmmyyyy
 	 
 	tomorrow_date = datetime.datetime.today() + datetime.timedelta(days=1)
-	tomorrow = tomorrow_date.strftime ('%d') # format the date to ddmmyyyy
+	tomorrow_fin = tomorrow_date.strftime ('%d') # format the date to ddmmyyyy
+
+	two_day_date = datetime.datetime.today() + datetime.timedelta(days=2)
+	two_day_fin = two_day_date.strftime ('%d') # format the date to ddmmyyyy
 
     # Call the Calendar API
 	now = datetime.datetime.utcnow().isoformat() + 'Z' # 'Z' indicates UTC time
-	events_result = service.events().list(calendarId='rti648k5hv7j3ae3a3rum8potk@group.calendar.google.com', timeMin=now,maxResults=9, singleEvents=True,orderBy='startTime').execute()
+	events_result = calendar_service.events().list(calendarId='rti648k5hv7j3ae3a3rum8potk@group.calendar.google.com', timeMin=now,maxResults=9, singleEvents=True,orderBy='startTime').execute()
 	events = events_result.get('items', [])
 
 	finalEvents = "<br>"
@@ -112,7 +84,7 @@ def calendar():
 
 		finalDate = ''.join(semiFinalDate)
 		
-		finalfinalDate = finalDate.replace("T", "", 1).replace(today, "Today at ").replace(tomorrow, "Tomorrow at ")
+		finalfinalDate = finalDate.replace("T", "", 1).replace(today, "Today at ").replace(tomorrow_fin, "Tomorrow at ").replace(two_day_fin, "In two days at ")
 
 		finalEvents += "<div class='calendar-event-container-lvl2'><span class='calendar-text-date'>" + finalfinalDate + " " + "</span>"
 		finalEvents += "<span class='calendar-text' id='calendar'>" + ''.join(event['summary']) + "</span></div>"

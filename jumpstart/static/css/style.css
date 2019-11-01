@@ -1,3 +1,6 @@
+body{
+    background-image: url(darkmode.png);
+}
 #top-bar{
     border: 5px solid #B0197E;
     background-color: #34495e;
