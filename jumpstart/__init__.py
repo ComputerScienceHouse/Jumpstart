@@ -68,7 +68,7 @@ def calendar():
 
 		finDate = parser.parse(start)
 		delta = finDate - now
-		formatted = format_timedelta(delta) if delta > timedelta(0) else "Now"
+		formatted = format_timedelta(delta) if delta > timedelta(0) else "------"
 
 		finalEvents += "<div class='calendar-event-container-lvl2'><span class='calendar-text-date'>" + formatted + "</span><br>"
 		finalEvents += "<span class='calendar-text' id='calendar'>" + ''.join(event['summary']) + "</span></div>"
@@ -78,6 +78,7 @@ def calendar():
 	return jsonify(eventList)
 
 @app.route('/getdata-reset', methods=['GET', 'POST'])
+@limiter.limit("125/minute")
 def add():
 	if request.method == 'POST':
 		req_data = request.get_json()

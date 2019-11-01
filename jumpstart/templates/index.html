@@ -37,17 +37,14 @@
 setInterval(function(){
     var date = new Date();
     if(9 < date.getHours() < 21){
-        if (date.getMonth()+1 == 10 && (date.getDate() == 29 || date.getDate() == 30 || date.getDate() == 31) ) {
-            $("body").css("background-image", "url(../static/css/spookymode.png)");
-        }else{
-            $("body").css("background-image", "url(../static/css/lightmode.png)");
-        }
+        $("body").css("background-image", "url(../static/css/lightmode.png)");
     }else{
-        if (date.getMonth()+1 == 10 && (date.getDay() == 29 || date.getDay() == 30 || date.getDay() == 31) ) {
-            $("body").css("background-image", "url(../static/css/spookymode.png)");
-        }else{
-            $("body").css("background-image", "url(../static/css/darkmode.png)");
-        }
+        $("body").css("background-image", "url(../static/css/darkmode.png)");
+    }
+    if (date.getMonth()+1 == 10 && (date.getDate() == 29 || date.getDate() == 30 || date.getDate() == 31) ){
+        $("body").css("background-image", "url(../static/css/spookymode.png)");
+    }else if(date.getMonth()+1 == 11 && (date.getDate() == 1 || date.getDate() == 2 || date.getDate() == 3)){
+        $("body").css("background-image", "url(../static/css/spookymode.png)");
     }
 }, 60000);
 
@@ -63,7 +60,7 @@ setInterval(function(){
     })
     .catch(err => console.log(err))
 
-}, 5000);
+}, 10000);
 
 setInterval(function(){ 
     fetch('/calendar', {
