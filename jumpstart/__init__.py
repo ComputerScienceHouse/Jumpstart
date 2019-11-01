@@ -51,7 +51,6 @@ def index():
 @app.route('/calendar', methods=['GET'])
 @limiter.limit("125/minute")
 def calendar():
-	now = datetime.datetime.now()
 	today = datetime.datetime.today().strftime ('%d') # format the date to ddmmyyyy
 	 
 	tomorrow_date = datetime.datetime.today() + datetime.timedelta(days=1)
@@ -84,7 +83,7 @@ def calendar():
 
 		finalDate = ''.join(semiFinalDate)
 		
-		finalfinalDate = finalDate.replace("T", "", 1).replace(today, "Today at ").replace(tomorrow_fin, "Tomorrow at ").replace(two_day_fin, "In two days at ")
+		finalfinalDate = finalDate.replace("T", "", 1).replace(today, "Today at ", 1).replace(tomorrow_fin, "Tomorrow at ", 1).replace(two_day_fin, "In two days at ", 1)
 
 		finalEvents += "<div class='calendar-event-container-lvl2'><span class='calendar-text-date'>" + finalfinalDate + " " + "</span>"
 		finalEvents += "<span class='calendar-text' id='calendar'>" + ''.join(event['summary']) + "</span></div>"
