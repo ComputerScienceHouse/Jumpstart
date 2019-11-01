@@ -1,7 +1,7 @@
 from __future__ import print_function
 import os
 from datetime import datetime, timedelta, timezone
-from babel.dates import format_timedelta
+from Babel.dates import format_timedelta
 from dateutil import parser
 from googleapiclient.discovery import build
 from google_auth_oauthlib.flow import InstalledAppFlow
