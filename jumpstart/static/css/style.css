@@ -6,6 +6,25 @@ body{
     background-color: #34495e;
 }
 
+.shower-thoughts{
+    float: left;
+    width: 100%;
+}
+
+.shower-thoughts-text-header{
+    color: black;
+    font-family: 'Courier New', Courier, monospace;
+    font-size: 20px;
+    text-align: center;
+}
+
+.shower-thoughts-text-body{
+    color: #34495e;
+    font-family: 'Courier New', Courier, monospace;
+    font-size: 18px;
+    text-align: center;
+}
+
 .datadog{
     overflow: hidden;
     border: 8px #B0197E solid;
@@ -29,8 +48,8 @@ body{
     border: 5px #B0197E solid;
     border-radius: 10px;
     margin-top: 5%;
-    height: 940px;
-    max-height: 940px;
+    height: 950px;
+    max-height: 950px;
     overflow: hidden;
 }
 

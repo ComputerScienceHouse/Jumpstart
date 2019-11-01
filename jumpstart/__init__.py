@@ -7,12 +7,12 @@ from googleapiclient.discovery import build
 from google_auth_oauthlib.flow import InstalledAppFlow
 from google.auth.transport.requests import Request
 from flask import Flask, request, render_template, jsonify, redirect
-from json import *
 from flask_limiter import Limiter
 from flask_limiter.util import get_remote_address
 from flask_httpauth import HTTPTokenAuth
 from flask_sqlalchemy import SQLAlchemy
 from jumpstart.google import calendar_service
+import json, random, textwrap, requests
 
 app = Flask(__name__)
 
@@ -39,7 +39,7 @@ def verify_token(token):
 limiter = Limiter(
     app,
     key_func=get_remote_address,
-    default_limits=["21 per minute", "1 per second"],
+    default_limits=["30 per minute", "1 per second"],
 )
 
 @limiter.request_filter
@@ -116,5 +116,14 @@ def update():
 if __name__ == '__main__':
 	app.run(debug=True)
 
+@app.route('/showerthoughts', methods=['GET'])
+@limiter.limit("4/minute")
+def showerthoughts():
+	randompost = random.randint(1,20)
+	url = requests.get('https://www.reddit.com/r/showerthoughts/hot.json', headers = {'User-agent': 'Showerthoughtbot 0.1'})
+	reddit = json.loads(url.text)
+	shower_thoughts = textwrap.fill((reddit['data']['children'][randompost]['data']['title']),48)
+	st = {'data': shower_thoughts}
+	return jsonify(st)
 
 

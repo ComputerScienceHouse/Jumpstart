@@ -24,6 +24,18 @@
         <div class="row justify-content-around">
             <div class="col-md-10" style="align-content: left; overflow: hidden;" align="left">
                 <iframe class="datadog" scrolling="no" frameborder="0" src="https://p.datadoghq.com/sb/44f16805b-cab847d58c?tv_mode=true"></iframe>
+                <div class="shower-thoughts">
+                    <div class="panel panel-primary">
+                        <div class="panel-heading">
+                            <b><span class="shower-thoughts-text-header">Shower Thoughts</span></b>
+                        </div>
+                        <div class="panel-body">
+                            <div class="plug-body">
+                                <b><span class="shower-thoughts-text-body" id="showerthoughts"></span></b>
+                            </div>
+                        </div>
+                    </div>
+                </div>
             </div>
             <div class="col-md-2">
                 <div class="calendar-frame-lvl1" style="float: right;" width="" height="940" frameborder="0" scrolling="no">
@@ -77,6 +89,20 @@ setInterval(function(){
     document.getElementById("weather-image").src = "https://w.bookcdn.com/weather/picture/26_1500_0_1_34495e_250_2c3e50_ffffff_ffffff_1_2071c9_ffffff_0_6.png?scode=124&domid=w209&anc_id=23470&" + new Date().getTime();
 
 }, 10000);
+
+setInterval(function(){ 
+    fetch('/showerthoughts', {
+        method: 'GET',
+        mode:'no-cors',
+        dataType: 'json'
+    })
+    .then(r => r.json())
+    .then(r => {
+        $("#showerthoughts").text(r.data)
+    })
+    .catch(err => console.log(err))
+
+}, 30000);
 </script>
 </body>
 </html>
