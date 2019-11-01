@@ -1,6 +1,8 @@
 from __future__ import print_function
 import os
-import datetime
+from datetime import datetime, timedelta, timezone
+from babel.dates import format_timedelta
+from dateutil import parser
 from googleapiclient.discovery import build
 from google_auth_oauthlib.flow import InstalledAppFlow
 from google.auth.transport.requests import Request
@@ -51,17 +53,10 @@ def index():
 @app.route('/calendar', methods=['GET'])
 @limiter.limit("125/minute")
 def calendar():
-	today = datetime.datetime.today().strftime ('%d') # format the date to ddmmyyyy
-	 
-	tomorrow_date = datetime.datetime.today() + datetime.timedelta(days=1)
-	tomorrow_fin = tomorrow_date.strftime ('%d') # format the date to ddmmyyyy
-
-	two_day_date = datetime.datetime.today() + datetime.timedelta(days=2)
-	two_day_fin = two_day_date.strftime ('%d') # format the date to ddmmyyyy
 
     # Call the Calendar API
-	now = datetime.datetime.utcnow().isoformat() + 'Z' # 'Z' indicates UTC time
-	events_result = calendar_service.events().list(calendarId='rti648k5hv7j3ae3a3rum8potk@group.calendar.google.com', timeMin=now,maxResults=9, singleEvents=True,orderBy='startTime').execute()
+	now = datetime.now(timezone.utc)
+	events_result = calendar_service.events().list(calendarId='rti648k5hv7j3ae3a3rum8potk@group.calendar.google.com', timeMin=now.isoformat(), maxResults=9, singleEvents=True, orderBy='startTime').execute()
 	events = events_result.get('items', [])
 
 	finalEvents = "<br>"
@@ -70,22 +65,12 @@ def calendar():
 		print('No upcoming events found.')
 	for event in events:
 		start = event['start'].get('dateTime', event['start'].get('date'))
-		
-		finalDate = ""
 
-		semiFinalDate = list(start)
+		finDate = parser.parse(start)
+		delta = finDate - now
+		formatted = format_timedelta(delta) if delta > timedelta(0) else "Now"
 
-		for j in range(0, 8):
-			del semiFinalDate[0]
-
-		for i in range(0, 9):
-			del semiFinalDate[len(semiFinalDate)-1]
-
-		finalDate = ''.join(semiFinalDate)
-		
-		finalfinalDate = finalDate.replace("T", "", 1).replace(today, "Today at ", 1).replace(tomorrow_fin, "Tomorrow at ", 1).replace(two_day_fin, "In two days at ", 1)
-
-		finalEvents += "<div class='calendar-event-container-lvl2'><span class='calendar-text-date'>" + finalfinalDate + " " + "</span>"
+		finalEvents += "<div class='calendar-event-container-lvl2'><span class='calendar-text-date'>" + formatted + "</span><br>"
 		finalEvents += "<span class='calendar-text' id='calendar'>" + ''.join(event['summary']) + "</span></div>"
 		finalEvents += "<hr style='border: 1px #B0197E solid;'>"
 
