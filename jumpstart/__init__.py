@@ -24,10 +24,24 @@ app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = True
 app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///site.db'
 db = SQLAlchemy(app)
 
-from jumpstart.models import File
+from jumpstart.models import File, Ann
 
 if not os.path.exists(os.path.join(os.getcwd(), "site.db")):
 	db.create_all()
+
+def initDBF():
+	file = File(title="___")
+	db.session.query(File).delete()
+	db.session.commit()
+	db.session.add(file)
+	db.session.commit()
+
+def initDBA():
+	ann = Ann(title="___")
+	db.session.query(Ann).delete()
+	db.session.commit()
+	db.session.add(ann)
+	db.session.commit()
 
 @auth.verify_token
 def verify_token(token):
@@ -51,12 +65,12 @@ def index():
 	return render_template('index.html')
 
 @app.route('/calendar', methods=['GET'])
-@limiter.limit("125/minute")
+@limiter.limit("14/minute")
 def calendar():
 
     # Call the Calendar API
 	now = datetime.now(timezone.utc)
-	events_result = calendar_service.events().list(calendarId='rti648k5hv7j3ae3a3rum8potk@group.calendar.google.com', timeMin=now.isoformat(), maxResults=9, singleEvents=True, orderBy='startTime').execute()
+	events_result = calendar_service.events().list(calendarId='rti648k5hv7j3ae3a3rum8potk@group.calendar.google.com', timeMin=now.isoformat(), maxResults=10, singleEvents=True, orderBy='startTime').execute()
 	events = events_result.get('items', [])
 
 	finalEvents = "<br>"
@@ -77,31 +91,46 @@ def calendar():
 	eventList = {'data': finalEvents}
 	return jsonify(eventList)
 
-@app.route('/getdata-reset', methods=['GET', 'POST'])
-@limiter.limit("125/minute")
-def add():
+@app.route('/get-announcement', methods=['GET', 'POST'])
+@limiter.limit("14/minute")
+def get_announcement():
 	if request.method == 'POST':
+		initDBA()
+		return "It worked"
+	else:
+		ann = Ann.query.first()
+		announcement_post = {'data' : str(ann)}
+		return jsonify(announcement_post)
+
+@app.route("/update-announcement", methods=["POST"])
+# @auth.login_required
+def update_announcement():
+	try:
 		req_data = request.get_json()
-		filename = req_data['file_name']
-		try:
-			file = File(title=filename)
-			db.session.query(File).delete()
-			db.session.commit()
-			db.session.add(file)
-			db.session.commit()
-		except Exception as e:
-			print("Failed to add File")
-			print(e)
-		file = File.query.all()
-		return str(file)
+		ann_data = req_data['ann_body']
+		ann = Ann.query.first()
+		ann.title = ann_data
+		db.session.commit()
+		return "Announcement Updated"
+	except Exception as e:
+		print("Couldn't update Announcement")
+		print(e)
+		return "Announcement Wasn't Updated"
+
+@app.route('/get-harold', methods=['GET', 'POST'])
+@limiter.limit("14/minute")
+def get_harold():
+	if request.method == 'POST':
+		initDBF()
+		return "It worked"
 	else:
 		file = File.query.first()
 		filename = {'data': str(file)}
 		return jsonify(filename)
 
-@app.route("/update", methods=["POST"])
+@app.route("/update-harold", methods=["POST"])
 @auth.login_required
-def update():
+def update_harold():
 	try:
 		req_data = request.get_json()
 		filename = req_data['file_name']
@@ -111,19 +140,18 @@ def update():
 	except Exception as e:
 		print("Couldn't update File")
 		print(e)
-	return "It worked"
-
-if __name__ == '__main__':
-	app.run(debug=True)
+	return "Harold File Updated"
 
 @app.route('/showerthoughts', methods=['GET'])
-@limiter.limit("4/minute")
+@limiter.limit("2/minute")
 def showerthoughts():
 	randompost = random.randint(1,20)
 	url = requests.get('https://www.reddit.com/r/showerthoughts/hot.json', headers = {'User-agent': 'Showerthoughtbot 0.1'})
 	reddit = json.loads(url.text)
-	shower_thoughts = textwrap.fill((reddit['data']['children'][randompost]['data']['title']),48)
+	shower_thoughts = textwrap.fill((reddit['data']['children'][randompost]['data']['title']),50)
 	st = {'data': shower_thoughts}
 	return jsonify(st)
-
+	
+if __name__ == '__main__':
+	app.run(debug=True)
 

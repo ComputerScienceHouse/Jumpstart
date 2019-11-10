@@ -22,6 +22,18 @@
         <div class="row justify-content-around">
             <div class="col-md-10" style="align-content: left; overflow: hidden;" align="left">
                 <iframe class="datadog" scrolling="no" frameborder="0" src="https://p.datadoghq.com/sb/44f16805b-cab847d58c?tv_mode=true"></iframe>
+                <div class="announcements">
+                    <div class="panel panel-primary" style="overflow: hidden;">
+                        <div class="panel-heading">
+                            <b><span class="announcements-text-header">Announcements</span></b>
+                        </div>
+                        <div class="panel-body">
+                            <div class="plug-body">
+                                <b><span class="announcements-text-body" id="announcement"></span></b>
+                            </div>
+                        </div>
+                    </div>
+                </div>
                 <div class="shower-thoughts">
                     <div class="panel panel-primary">
                         <div class="panel-heading">
@@ -29,7 +41,7 @@
                         </div>
                         <div class="panel-body">
                             <div class="plug-body">
-                                <b><span class="shower-thoughts-text-body" id="showerthoughts"></span></b>
+                                <b><span class="shower-thoughts-text-body" id="showerthoughts">Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.</span></b>
                             </div>
                         </div>
                     </div>
@@ -51,7 +63,7 @@ setInterval(function(){
         $("body").css("background-image", "url(../static/css/spookymode.png)");
     }else if(date.getMonth()+1 == 11 && (date.getDate() == 2)){
         $("body").css("background-image", "url(../static/css/duckymode2.png)");
-    }else if(9 < date.getHours() < 21){
+    }else if(9 < date.getHours() && date.getHours() < 18){
         $("body").css("background-image", "url(../static/css/lightmode.png)");
     }else{
         $("body").css("background-image", "url(../static/css/darkmode.png)");
@@ -68,7 +80,7 @@ setInterval(function(){
     })
     .catch(err => console.log(err))
     
-}, 60000);
+}, 30000);
 
 
 setInterval(function(){ 
@@ -85,7 +97,7 @@ setInterval(function(){
 
     document.getElementById("weather-image").src = "https://w.bookcdn.com/weather/picture/26_1500_0_1_34495e_250_2c3e50_ffffff_ffffff_1_2071c9_ffffff_0_6.png?scode=124&domid=w209&anc_id=23470&" + new Date().getTime();
 
-    fetch('/getdata-h', {
+    fetch('/get-harold', {
         method: 'GET',
         mode:'no-cors',
         dataType: 'json'
@@ -96,7 +108,19 @@ setInterval(function(){
     })
     .catch(err => console.log(err))
 
-}, 10000);
+    fetch('/get-announcement', {
+        method: 'GET',
+        mode:'no-cors',
+        dataType: 'json'
+    })
+    .then(r => r.json())
+    .then(r => {
+        $("#announcement").text(r.data.substring(0, 921))
+    })
+    .catch(err => console.log(err))
+
+}, 5000);
+
 
 </script>
 </body>
