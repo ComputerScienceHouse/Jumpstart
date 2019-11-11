@@ -142,6 +142,9 @@ def update_harold():
 		print(e)
 	return "Harold File Updated"
 
+if __name__ == '__main__':
+	app.run(debug=True)
+
 @app.route('/showerthoughts', methods=['GET'])
 @limiter.limit("2/minute")
 def showerthoughts():
@@ -151,7 +154,4 @@ def showerthoughts():
 	shower_thoughts = textwrap.fill((reddit['data']['children'][randompost]['data']['title']),50)
 	st = {'data': shower_thoughts}
 	return jsonify(st)
-	
-if __name__ == '__main__':
-	app.run(debug=True)
 
