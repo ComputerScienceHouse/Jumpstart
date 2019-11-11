@@ -109,7 +109,7 @@ def update_announcement():
 		req_data = request.get_json()
 		ann_data = req_data['ann_body']
 		ann = Ann.query.first()
-		ann.title = ann_data
+		ann.title = req_data
 		db.session.commit()
 		return "Announcement Updated"
 	except Exception as e:
