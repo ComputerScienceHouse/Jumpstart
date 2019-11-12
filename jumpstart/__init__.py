@@ -13,6 +13,11 @@ from flask_httpauth import HTTPTokenAuth
 from flask_sqlalchemy import SQLAlchemy
 from jumpstart.google import calendar_service
 import json, random, textwrap, requests
+from profanity_filter import ProfanityFilter
+
+pf = ProfanityFilter(languages=['ru', 'en'])
+
+pf.censor_char = 'ß'
 
 app = Flask(__name__)
 
@@ -83,9 +88,10 @@ def calendar():
 		finDate = parser.parse(start)
 		delta = finDate - now
 		formatted = format_timedelta(delta) if delta > timedelta(0) else "------"
-
+		eventToPost = ''.join(event['summary'])
+		
 		finalEvents += "<div class='calendar-event-container-lvl2'><span class='calendar-text-date'>" + formatted + "</span><br>"
-		finalEvents += "<span class='calendar-text' id='calendar'>" + ''.join(event['summary']) + "</span></div>"
+		finalEvents += "<span class='calendar-text' id='calendar'>" + pf.censor(eventToPost) + "</span></div>"
 		finalEvents += "<hr style='border: 1px #B0197E solid;'>"
 
 	eventList = {'data': finalEvents}
@@ -152,6 +158,8 @@ def showerthoughts():
 	url = requests.get('https://www.reddit.com/r/showerthoughts/hot.json', headers = {'User-agent': 'Showerthoughtbot 0.1'})
 	reddit = json.loads(url.text)
 	shower_thoughts = textwrap.fill((reddit['data']['children'][randompost]['data']['title']),50)
-	st = {'data': shower_thoughts}
+	stpo = shower_thoughts.replaceAll("<.*?>", "")
+	stp = pf.censor(stpo)
+	st = {'data': stp}
 	return jsonify(st)
 
