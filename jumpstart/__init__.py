@@ -1,6 +1,5 @@
 from __future__ import print_function
 import os
-from profanity_filter import *
 from datetime import datetime, timedelta, timezone
 from babel.dates import format_timedelta
 from dateutil import parser
@@ -14,12 +13,9 @@ from flask_httpauth import HTTPTokenAuth
 from flask_sqlalchemy import SQLAlchemy
 from jumpstart.google import calendar_service
 import json, random, textwrap, requests
+from profanity_filter import ProfanityFilter
 
 app = Flask(__name__)
-
-pf = ProfanityFilter()
-
-pf.censor_char = 'ß'
 
 auth = HTTPTokenAuth(scheme='Token')
 api_keys = os.environ.get('JUMPSTART_API_KEYS')
@@ -88,10 +84,9 @@ def calendar():
 		finDate = parser.parse(start)
 		delta = finDate - now
 		formatted = format_timedelta(delta) if delta > timedelta(0) else "------"
-		eventToPost = ''.join(event['summary'])
 
 		finalEvents += "<div class='calendar-event-container-lvl2'><span class='calendar-text-date'>" + formatted + "</span><br>"
-		finalEvents += "<span class='calendar-text' id='calendar'>" + pf.censor(eventToPost) + "</span></div>"
+		finalEvents += "<span class='calendar-text' id='calendar'>" + ''.join(event['summary']) + "</span></div>"
 		finalEvents += "<hr style='border: 1px #B0197E solid;'>"
 
 	eventList = {'data': finalEvents}
@@ -159,6 +154,7 @@ def showerthoughts():
 	reddit = json.loads(url.text)
 	shower_thoughts = textwrap.fill((reddit['data']['children'][randompost]['data']['title']),50)
 	stpo = shower_thoughts.replaceAll("<.*?>", "")
+	pf = ProfanityFilter()
 	stp = pf.censor(stpo)
 	st = {'data': stp}
 	return jsonify(st)
