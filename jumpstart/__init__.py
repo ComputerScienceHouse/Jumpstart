@@ -1,5 +1,6 @@
 from __future__ import print_function
 import os
+from profanity_filter import *
 from datetime import datetime, timedelta, timezone
 from babel.dates import format_timedelta
 from dateutil import parser
@@ -13,11 +14,10 @@ from flask_httpauth import HTTPTokenAuth
 from flask_sqlalchemy import SQLAlchemy
 from jumpstart.google import calendar_service
 import json, random, textwrap, requests
-from profanity_filter import ProfanityFilter
 
 app = Flask(__name__)
 
-pf = ProfanityFilter(languages=['ru', 'en'])
+pf = ProfanityFilter()
 
 pf.censor_char = 'ß'
 
