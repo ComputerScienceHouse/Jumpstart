@@ -1,6 +1,5 @@
 from __future__ import print_function
 import os
-import re
 from datetime import datetime, timedelta, timezone
 from babel.dates import format_timedelta
 from dateutil import parser
@@ -12,13 +11,10 @@ from flask_limiter import Limiter
 from flask_limiter.util import get_remote_address
 from flask_httpauth import HTTPTokenAuth
 from flask_sqlalchemy import SQLAlchemy
-from profanity_filter import ProfanityFilter
 from jumpstart.google import calendar_service
 import json, random, textwrap, requests
 
 app = Flask(__name__)
-
-pf = ProfanityFilter()
 
 auth = HTTPTokenAuth(scheme='Token')
 api_keys = os.environ.get('JUMPSTART_API_KEYS')
@@ -155,9 +151,8 @@ def showerthoughts():
 	randompost = random.randint(1,20)
 	url = requests.get('https://www.reddit.com/r/showerthoughts/hot.json', headers = {'User-agent': 'Showerthoughtbot 0.1'})
 	reddit = json.loads(url.text)
-	shower_thoughts = textwrap.fill((reddit['data']['children'][randompost]['data']['title']),50)
-	stpo = shower_thoughts.replaceAll("<.*?>", "")
-	stp = pf.censor("That's bullshit")
+	shower_thoughts = textwrap.fill((reddit['data']['children'][randompost]['data']['title']),64)
+	stp = shower_thoughts.replaceAll("<.*?>", "")
 	st = {'data': stp}
 	return jsonify(st)
 
