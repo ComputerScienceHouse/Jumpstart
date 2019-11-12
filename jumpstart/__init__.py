@@ -158,7 +158,7 @@ def showerthoughts():
 	reddit = json.loads(url.text)
 	shower_thoughts = textwrap.fill((reddit['data']['children'][randompost]['data']['title']),50)
 	stpo = shower_thoughts.replaceAll("<.*?>", "")
-	stp = pf.censor(stpo)
+	stp = pf.censor("That's bullshit")
 	st = {'data': stp}
 	return jsonify(st)
 
