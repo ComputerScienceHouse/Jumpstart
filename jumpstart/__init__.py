@@ -13,7 +13,6 @@ from flask_httpauth import HTTPTokenAuth
 from flask_sqlalchemy import SQLAlchemy
 from jumpstart.google import calendar_service
 import json, random, textwrap, requests
-from profanity_filter import ProfanityFilter
 
 app = Flask(__name__)
 
@@ -153,9 +152,6 @@ def showerthoughts():
 	url = requests.get('https://www.reddit.com/r/showerthoughts/hot.json', headers = {'User-agent': 'Showerthoughtbot 0.1'})
 	reddit = json.loads(url.text)
 	shower_thoughts = textwrap.fill((reddit['data']['children'][randompost]['data']['title']),50)
-	stpo = shower_thoughts.replaceAll("<.*?>", "")
-	pf = ProfanityFilter()
-	stp = pf.censor(stpo)
-	st = {'data': stp}
+	st = {'data': shower_thoughts}
 	return jsonify(st)
 
