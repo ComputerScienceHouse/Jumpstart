@@ -8,6 +8,6 @@ google-auth-httplib2~=0.0.3
 google-auth-oauthlib~=0.4.1
 gunicorn~=19.9.0
 oauth2client~=4.1.3
-profanity-filter>=1.1.14
+profanity-filter>=1.1.1
 python-dateutil~=2.6.1
 SQLAlchemy~=1.3.7
