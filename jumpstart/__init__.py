@@ -15,11 +15,11 @@ from jumpstart.google import calendar_service
 import json, random, textwrap, requests
 from profanity_filter import ProfanityFilter
 
+app = Flask(__name__)
+
 pf = ProfanityFilter(languages=['ru', 'en'])
 
 pf.censor_char = 'ß'
-
-app = Flask(__name__)
 
 auth = HTTPTokenAuth(scheme='Token')
 api_keys = os.environ.get('JUMPSTART_API_KEYS')
@@ -89,7 +89,7 @@ def calendar():
 		delta = finDate - now
 		formatted = format_timedelta(delta) if delta > timedelta(0) else "------"
 		eventToPost = ''.join(event['summary'])
-		
+
 		finalEvents += "<div class='calendar-event-container-lvl2'><span class='calendar-text-date'>" + formatted + "</span><br>"
 		finalEvents += "<span class='calendar-text' id='calendar'>" + pf.censor(eventToPost) + "</span></div>"
 		finalEvents += "<hr style='border: 1px #B0197E solid;'>"
