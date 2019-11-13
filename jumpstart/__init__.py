@@ -1,3 +1,8 @@
+""" Jumpstart
+Dashbord for TV in the loby of NRH 3
+Author: Beckett Jenen
+"""
+
 from __future__ import print_function
 import os
 import re
