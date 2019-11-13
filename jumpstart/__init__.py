@@ -177,7 +177,7 @@ def showerthoughts():
     )
     reddit = json.loads(url.text)
     shower_thoughts = textwrap.fill((reddit['data']['children'][randompost]['data']['title']), 50)
-    if ("#" in shower_thoughts) || (" fuck" in shower_thoughts) || (" bitch" in shower_thoughts) || (" masterbate" in shower_thoughts) || (" dildo" in shower_thoughts) || (" cunt" in shower_thoughts) || (" pussy" in shower_thoughts) || (" penis" in shower_thoughts):
+    if ("#" in shower_thoughts) or (" fuck" in shower_thoughts) or (" bitch" in shower_thoughts) or (" masterbate" in shower_thoughts) or (" dildo" in shower_thoughts) or (" cunt" in shower_thoughts) or (" pussy" in shower_thoughts) or (" penis" in shower_thoughts):
         shower_thoughts = "LIGMA LIGMA LIGMA LIGMA LIGMA"
     s_t = {'data': shower_thoughts}
     return jsonify(s_t)
