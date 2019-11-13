@@ -2,9 +2,11 @@
 <html lang="en-US">
 <head>
     <title>Jumpstart</title>
+    <!-- Metta -->
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1"/>
     <meta name="theme-color" content="#B0197E">
+    <!-- Linking to stylesheets, scriptsheets, and apis -->
     <link rel="stylesheet" href="https://assets.csh.rit.edu/csh-material-bootstrap/3.3.6/dist/csh-material-bootstrap.min.css">
     <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
     <script src="{{ url_for('static', filename='js/script.js') }}"></script>
@@ -13,11 +15,10 @@
     <link type="text/css" rel="stylesheet" href="//calendar.google.com/calendar/static/c6011b9dda3a0577ec4249fc8309d70eembedcompiled_fastui.css">
 </head>
 <body>
+    <!-- App container -->
     <div class="container-fluid">
         <div class="row" id="top-bar" align="left">
-            <!-- <a target="_blank" style="float: left;" href="https://www.booked.net/weather/rochester-1500"><img id="weather-image" src="https://w.bookcdn.com/weather/picture/26_1500_0_1_34495e_250_2c3e50_ffffff_ffffff_1_2071c9_ffffff_0_6.png?scode=124&domid=w209&anc_id=23470"  alt="booked.net"/></a> -->
-            <iframe style="-webkit-transform-origin: 8%  65%; -webkit-transform: scale(.50,.50); float: left;" src="https://free.timeanddate.com/clock/i6zogrqs/n179/fn8/fs45/fcfcf6fa/tct/pct/ahl/ftb/tt0/tm3/th2/ts1/tb1" frameborder="0" width="850" height="53" allowTransparency="true"></iframe> 
-        
+            <iframe style="-webkit-transform-origin: 8%  65%; -webkit-transform: scale(.50,.50); float: left;" src="https://free.timeanddate.com/clock/i6zogrqs/n179/fn8/fs45/fcfcf6fa/tct/pct/ahl/ftb/tt0/tm3/th2/ts1/tb1" frameborder="0" width="850" height="53" allowTransparency="true"></iframe>
         </div>
         <div class="row justify-content-around">
             <div class="col-md-10" style="align-content: left; overflow: hidden;" align="left">
@@ -35,7 +36,7 @@
                     </div>
                 </div>
                 <div class="weatherwidget">
-                    <a class="weatherwidget-io" id="weather-image" href="https://forecast7.com/en/43d16n77d61/rochester/?unit=us" data-label_1="ROCHESTER" data-label_2="WEATHER" data-font="Fira Sans" data-icons="Climacons Animated" data-days="5" data-theme="kitty" >ROCHESTER WEATHER</a>
+                    <a class="weatherwidget-io" id="weather-image" href="https://forecast7.com/en/43d16n77d61/rochester/?unit=us" data-label_1="ROCHESTER" data-label_2="WEATHER" data-font="Fira Sans" data-icons="Climacons Animated" data-days="100" data-theme="kitty" >ROCHESTER WEATHER</a>
                     <script>
                     !function(d,s,id){var js,fjs=d.getElementsByTagName(s)[0];if(!d.getElementById(id)){js=d.createElement(s);js.id=id;js.src='https://weatherwidget.io/js/widget.min.js';fjs.parentNode.insertBefore(js,fjs);}}(document,'script','weatherwidget-io-js');
                     </script>
@@ -43,7 +44,7 @@
                 <div class="shower-thoughts">
                     <div class="panel panel-primary">
                         <div class="panel-heading">
-                            <b><span class="shower-thoughts-text-header">Shower Thoughts</span></b>
+                            <b><span class="shower-thoughts-text-header">Shower Thoughts - /r/showerthoughts</span></b>
                         </div>
                         <div class="panel-body">
                             <div class="plug-body">
@@ -56,7 +57,6 @@
             <div class="col-md-2">
                 <div class="calendar-frame-lvl1" style="float: right;" width="" height="940" frameborder="0" scrolling="no">
                     <b><div id="calendar"></div></b>
-                    <!-- <iframe src="https://calendar.google.com/calendar/embed?height=600&amp;wkst=1&amp;bgcolor=%233F51B5&amp;ctz=America%2FNew_York&amp;src=cnRpNjQ4azVodjdqM2FlM2EzcnVtOHBvdGtAZ3JvdXAuY2FsZW5kYXIuZ29vZ2xlLmNvbQ&amp;color=%234285F4&amp;showTitle=0&amp;showNav=0&amp;showDate=0&amp;showPrint=0&amp;showTabs=0&amp;showCalendars=0&amp;showTz=0&amp;mode=AGENDA" style="border-width:0; border: 5px #B0197E solid; border-radius: 15px; margin-top: 5%; float: right;" width="" height="750" frameborder="0" scrolling="no"></iframe> -->
                 </div>
             </div>
         </div>
@@ -101,7 +101,8 @@ setInterval(function(){
     })
     .catch(err => console.log(err))
 
-    document.getElementById("weather-image").src = "https://forecast7.com/en/43d16n77d61/rochester/?unit=us&" + new Date().getTime();
+    $("#weather-image").attr("href", "https://forecast7.com/en/43d16n77d61/rochester/?unit=us&" + new Date().getTime());
+
 
     fetch('/get-harold', {
         method: 'GET',

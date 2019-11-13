@@ -1,160 +1,183 @@
+""" Jumpstart
+Dashbord for TV in the loby of NRH 3
+Author: Beckett Jenen
+"""
+
 from __future__ import print_function
 import os
 import re
+import json
+import random
+import textwrap
 from datetime import datetime, timedelta, timezone
+from sentry_sdk.integrations.flask import FlaskIntegration
+import sentry_sdk
+import requests
 from babel.dates import format_timedelta
 from dateutil import parser
 from googleapiclient.discovery import build
 from google_auth_oauthlib.flow import InstalledAppFlow
-from google.auth.transport.requests import Request
-from flask import Flask, request, render_template, jsonify, redirect
+from flask import Flask
+from flask import request
+from flask import render_template
+from flask import jsonify
+from flask import redirect
 from flask_limiter import Limiter
 from flask_limiter.util import get_remote_address
 from flask_httpauth import HTTPTokenAuth
 from flask_sqlalchemy import SQLAlchemy
 from jumpstart.google import calendar_service
-import json, random, textwrap, requests
 
-app = Flask(__name__)
+sentry_sdk.init(
+    dsn="https://51494372c5b94b7cbf2d3e246da4f127@sentry.io/1818983",
+    integrations=[FlaskIntegration()]
+)
+
+App = Flask(__name__)
 
 auth = HTTPTokenAuth(scheme='Token')
 api_keys = os.environ.get('JUMPSTART_API_KEYS')
 
 tokens = api_keys.split(',') if api_keys else []
-app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = True
-app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///site.db'
-db = SQLAlchemy(app)
+App.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = True
+App.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///site.db'
+db = SQLAlchemy(App)
 
 from jumpstart.models import File, Ann
 
 if not os.path.exists(os.path.join(os.getcwd(), "site.db")):
-	db.create_all()
+    db.create_all()
 
-def initDBF():
-	file = File(title="___")
-	db.session.query(File).delete()
-	db.session.commit()
-	db.session.add(file)
-	db.session.commit()
+# Initializes the database for Files
+def init_dbf():
+    file = File(title="___")
+    db.session.query(File).delete()
+    db.session.commit()
+    db.session.add(file)
+    db.session.commit()
 
-def initDBA():
-	ann = Ann(title="___")
-	db.session.query(Ann).delete()
-	db.session.commit()
-	db.session.add(ann)
-	db.session.commit()
+def init_dba():
+    ann = Ann(title="___")
+    db.session.query(Ann).delete()
+    db.session.commit()
+    db.session.add(ann)
+    db.session.commit()
 
 @auth.verify_token
 def verify_token(token):
-	if token in tokens:
-		return True
-	return False
+    if token in tokens:
+        return True
+    return False
 
 
-limiter = Limiter(
-    app,
+Limiter = Limiter(
+    App,
     key_func=get_remote_address,
     default_limits=["30 per minute", "1 per second"],
 )
 
-@limiter.request_filter
+@Limiter.request_filter
 def ip_whitelist():
-	return request.remote_addr == "127.0.0.1"
+    return request.remote_addr == "127.0.0.1"
 
-@app.route('/')
+@App.route('/')
 def index():
-	return render_template('index.html')
+    return render_template('index.html')
 
-@app.route('/calendar', methods=['GET'])
-@limiter.limit("14/minute")
+@App.route('/calendar', methods=['GET'])
+@Limiter.limit("14/minute")
 def calendar():
 
     # Call the Calendar API
-	now = datetime.now(timezone.utc)
-	events_result = calendar_service.events().list(calendarId='rti648k5hv7j3ae3a3rum8potk@group.calendar.google.com', timeMin=now.isoformat(), maxResults=10, singleEvents=True, orderBy='startTime').execute()
-	events = events_result.get('items', [])
+    now = datetime.now(timezone.utc)
+    events_result = calendar_service.events().list(
+        calendarId='rti648k5hv7j3ae3a3rum8potk@group.calendar.google.com',
+        timeMin=now.isoformat(),
+        maxResults=10,
+        singleEvents=True,
+        orderBy='startTime',
+    ).execute()
+    events = events_result.get('items', [])
 
-	finalEvents = "<br>"
+    final_events = "<br>"
 
-	if not events:
-		print('No upcoming events found.')
-	for event in events:
-		start = event['start'].get('dateTime', event['start'].get('date'))
+    if not events:
+        print('No upcoming events found.')
+    for event in events:
+        start = event['start'].get('dateTime', event['start'].get('date'))
+        fin_date = parser.parse(start)
+        delta = fin_date - now
+        formatted = format_timedelta(delta) if delta > timedelta(0) else "------"
 
-		finDate = parser.parse(start)
-		delta = finDate - now
-		formatted = format_timedelta(delta) if delta > timedelta(0) else "------"
+        final_events += (
+            """<div class='calendar-event-container-lvl2'><span class='calendar-text-date'> """
+            + formatted +
+            """ </span><br>"""
+        )
+        final_events += (
+            "<span class='calendar-text' id='calendar'>"+
+            ''.join(event['summary'])+
+            "</span></div>"
+        )
+        final_events += "<hr style='border: 1px #B0197E solid;'>"
 
-		finalEvents += "<div class='calendar-event-container-lvl2'><span class='calendar-text-date'>" + formatted + "</span><br>"
-		finalEvents += "<span class='calendar-text' id='calendar'>" + ''.join(event['summary']) + "</span></div>"
-		finalEvents += "<hr style='border: 1px #B0197E solid;'>"
+    event_list = {'data': final_events}
+    return jsonify(event_list)
 
-	eventList = {'data': finalEvents}
-	return jsonify(eventList)
-
-@app.route('/get-announcement', methods=['GET', 'POST'])
-@limiter.limit("14/minute")
+@App.route('/get-announcement', methods=['GET', 'POST'])
+@Limiter.limit("14/minute")
 def get_announcement():
-	if request.method == 'POST':
-		initDBA()
-		return "It worked"
-	else:
-		ann = Ann.query.first()
-		announcement_post = {'data' : str(ann)}
-		return jsonify(announcement_post)
+    if request.method == 'POST':
+        init_dba()
+        return "It worked"
+    ann = Ann.query.first()
+    announcement_post = {'data' : str(ann)}
+    return jsonify(announcement_post)
 
-@app.route("/update-announcement", methods=["POST"])
+@App.route("/update-announcement", methods=["POST"])
 # @auth.login_required
 def update_announcement():
-	try:
-		req_data = request.get_json()
-		ann_data = req_data['ann_body']
-		ann = Ann.query.first()
-		ann.title = ann_data
-		db.session.commit()
-		return "Announcement Updated"
-	except Exception as e:
-		print("Couldn't update Announcement")
-		print(e)
-		return "Announcement Wasn't Updated"
+    req_data = request.get_json()
+    ann_data = req_data['ann_body']
+    ann = Ann.query.first()
+    ann.title = ann_data
+    db.session.commit()
+    return "Announcement Updated"
 
-@app.route('/get-harold', methods=['GET', 'POST'])
-@limiter.limit("14/minute")
+@App.route('/get-harold', methods=['GET', 'POST'])
+@Limiter.limit("14/minute")
 def get_harold():
-	if request.method == 'POST':
-		initDBF()
-		return "It worked"
-	else:
-		file = File.query.first()
-		filename = {'data': str(file)}
-		return jsonify(filename)
+    if request.method == 'POST':
+        init_dbf()
+        return "It worked"
+    file = File.query.first()
+    filename = {'data': str(file)}
+    return jsonify(filename)
 
-@app.route("/update-harold", methods=["POST"])
+@App.route("/update-harold", methods=["POST"])
 @auth.login_required
 def update_harold():
-	try:
-		req_data = request.get_json()
-		filename = req_data['file_name']
-		file = File.query.first()
-		file.title = filename
-		db.session.commit()
-	except Exception as e:
-		print("Couldn't update File")
-		print(e)
-	return "Harold File Updated"
+    req_data = request.get_json()
+    filename = req_data['file_name']
+    file = File.query.first()
+    file.title = filename
+    db.session.commit()
+    return "Harold File Updated"
 
 if __name__ == '__main__':
-	app.run(debug=True)
+    App.run(debug=True)
 
-@app.route('/showerthoughts', methods=['GET'])
-@limiter.limit("2/minute")
+@App.route('/showerthoughts', methods=['GET'])
+@Limiter.limit("2/minute")
 def showerthoughts():
-	randompost = random.randint(1,20)
-	url = requests.get('https://www.reddit.com/r/showerthoughts/hot.json', headers = {'User-agent': 'Showerthoughtbot 0.1'})
-	reddit = json.loads(url.text)
-	shower_thoughts = textwrap.fill((reddit['data']['children'][randompost]['data']['title']),50)
-	if "#" in shower_thoughts:
-		shower_thoughts = "LIGMA LIGMA LIGMA LIGMA LIGMA"
-	st = {'data': shower_thoughts}
-	return jsonify(st)
-
+    randompost = random.randint(1, 20)
+    url = requests.get(
+        'https://www.reddit.com/r/showerthoughts/hot.json',
+        headers={'User-agent':'Showerthoughtbot 0.1'},
+    )
+    reddit = json.loads(url.text)
+    shower_thoughts = textwrap.fill((reddit['data']['children'][randompost]['data']['title']), 50)
+    if "#" in shower_thoughts:
+        shower_thoughts = "LIGMA LIGMA LIGMA LIGMA LIGMA"
+    s_t = {'data': shower_thoughts}
+    return jsonify(s_t)
