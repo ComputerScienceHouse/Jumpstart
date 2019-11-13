@@ -18,6 +18,13 @@ body{
     font-size: 34px;
 }
 
+.weatherwidget{
+    margin-bottom: 1.5%;
+    float: right;
+    width: 760px;
+    border: 8px black solid;
+}
+
 .datadog{
     margin-top: 20px;
     overflow: auto;
@@ -26,7 +33,7 @@ body{
     width: 760px;
     height: 580px;
     float: right;
-    margin-bottom: 16%;
+    margin-bottom: 1.5%;
 }
 
 .announcements{
