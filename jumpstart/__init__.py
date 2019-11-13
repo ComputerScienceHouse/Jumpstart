@@ -152,7 +152,7 @@ def showerthoughts():
 	randompost = random.randint(1,20)
 	url = requests.get('https://www.reddit.com/r/showerthoughts/hot.json', headers = {'User-agent': 'Showerthoughtbot 0.1'})
 	reddit = json.loads(url.text)
-	shower_thoughts = textwrap.fill((reddit['data']['children'][randompost]['data']['title']),50)
-	st = {'data': st}
+	shower_thoughts = textwrap.fill((reddit['data']['children'][randompost]['data']['title']),50).replaceAll("<.*?>", "")
+	st = {'data': shower_thoughts}
 	return jsonify(st)
 
