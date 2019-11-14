@@ -27,6 +27,9 @@ from flask_limiter.util import get_remote_address
 from flask_httpauth import HTTPTokenAuth
 from flask_sqlalchemy import SQLAlchemy
 from jumpstart.google import calendar_service
+from profanityfilter import ProfanityFilter
+
+pf = ProfanityFilter()
 
 sentry_sdk.init(
     dsn="https://51494372c5b94b7cbf2d3e246da4f127@sentry.io/1818983",
@@ -177,7 +180,6 @@ def showerthoughts():
     )
     reddit = json.loads(url.text)
     shower_thoughts = textwrap.fill((reddit['data']['children'][randompost]['data']['title']), 50)
-    if ("#" in shower_thoughts) or (" fuck" in shower_thoughts) or (" bitch" in shower_thoughts) or (" masterbate" in shower_thoughts) or (" dildo" in shower_thoughts) or (" cunt" in shower_thoughts) or (" pussy" in shower_thoughts) or (" penis" in shower_thoughts):
-        shower_thoughts = "LIGMA LIGMA LIGMA LIGMA LIGMA"
-    s_t = {'data': shower_thoughts}
+    censored = pf.censor(shower_thoughts)
+    s_t = {'data': censored}
     return jsonify(s_t)

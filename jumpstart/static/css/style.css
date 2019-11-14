@@ -19,7 +19,6 @@ body{
 }
 
 .weatherwidget{
-    margin-bottom: 1.5%;
     float: right;
     width: 760px;
     border: 8px black solid;
@@ -33,7 +32,7 @@ body{
     width: 760px;
     height: 580px;
     float: right;
-    margin-bottom: 1.5%;
+    margin-bottom: 4%;
 }
 
 .announcements{
@@ -42,7 +41,7 @@ body{
     padding-top: 22.5%;
     padding-left: 1%;
     padding-bottom: 0.5%;
-    min-height: 700px;
+    min-height: 870px;
     overflow: hidden;
 }
 
