@@ -37,10 +37,10 @@
                 </div>
                 <div class="weatherwidget">
                     <a class="weatherwidget-io" id="weather-image" href="https://forecast7.com/en/43d16n77d61/rochester/?unit=us" data-label_1="ROCHESTER" data-label_2="WEATHER" data-font="Fira Sans" data-icons="Climacons Animated" data-days="100" data-theme="kitty" >ROCHESTER WEATHER</a>
-                    <script>
-                    !function(d,s,id){var js,fjs=d.getElementsByTagName(s)[0];if(!d.getElementById(id)){js=d.createElement(s);js.id=id;js.src='https://weatherwidget.io/js/widget.min.js';fjs.parentNode.insertBefore(js,fjs);}}(document,'script','weatherwidget-io-js');
-                    </script>
                 </div>
+                <script type="text/javascript">
+                    !function(d,s,id){var js,fjs=d.getElementsByTagName(s)[0];if(!d.getElementById(id)){js=d.createElement(s);js.id=id;js.src='https://weatherwidget.io/js/widget.min.js';fjs.parentNode.insertBefore(js,fjs);}}(document,'script','weatherwidget-io-js');
+                </script>
                 <div class="shower-thoughts">
                     <div class="panel panel-primary">
                         <div class="panel-heading">
@@ -101,8 +101,6 @@ setInterval(function(){
     })
     .catch(err => console.log(err))
 
-    $("#weather-image").attr("href", "https://forecast7.com/en/43d16n77d61/rochester/?unit=us&" + new Date().getTime());
-
 
     fetch('/get-harold', {
         method: 'GET',
@@ -128,7 +126,7 @@ setInterval(function(){
 
 }, 5000);
 
-
+setInterval('__weatherwidget_init()', 60000)
 </script>
 </body>
 </html>
