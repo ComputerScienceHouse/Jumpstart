@@ -137,9 +137,10 @@ def get_announcement():
     if request.method == 'POST':
         init_dba()
         return "It worked"
-    ann = Ann.query.first()
-    announcement_post = {'data' : str(ann)}
-    return jsonify(announcement_post)
+    else: 
+        ann = Ann.query.first()
+        announcement_post = {'data' : str(ann)}
+        return jsonify(announcement_post)
 
 @App.route("/update-announcement", methods=["POST"])
 # @auth.login_required
@@ -162,9 +163,10 @@ def get_harold():
     if request.method == 'POST':
         init_dbf()
         return "It worked"
-    file = File.query.first()
-    filename = {'data': str(file)}
-    return jsonify(filename)
+    else:
+        file = File.query.first()
+        filename = {'data': str(file)}
+        return jsonify(filename)
 
 @App.route("/update-harold", methods=["POST"])
 @auth.login_required
