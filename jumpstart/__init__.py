@@ -31,6 +31,8 @@ from profanityfilter import ProfanityFilter
 
 pf = ProfanityFilter()
 
+# pf.censor_char = ''
+
 sentry_sdk.init(
     dsn="https://51494372c5b94b7cbf2d3e246da4f127@sentry.io/1818983",
     integrations=[FlaskIntegration()]
@@ -73,13 +75,13 @@ def verify_token(token):
     return False
 
 
-Limiter = Limiter(
+limiter = Limiter(
     App,
     key_func=get_remote_address,
-    default_limits=["30 per minute", "1 per second"],
+    default_limits=["13 per minute", "1 per second"],
 )
 
-@Limiter.request_filter
+@limiter.request_filter
 def ip_whitelist():
     return request.remote_addr == "127.0.0.1"
 
@@ -88,7 +90,8 @@ def index():
     return render_template('index.html')
 
 @App.route('/calendar', methods=['GET'])
-@Limiter.limit("14/minute")
+@limiter.limit("3/minute")
+@limiter.limit("1/second")
 def calendar():
 
     # Call the Calendar API
@@ -128,7 +131,8 @@ def calendar():
     return jsonify(event_list)
 
 @App.route('/get-announcement', methods=['GET', 'POST'])
-@Limiter.limit("14/minute")
+@limiter.limit("13/minute")
+@limiter.limit("1/second")
 def get_announcement():
     if request.method == 'POST':
         init_dba()
@@ -139,16 +143,21 @@ def get_announcement():
 
 @App.route("/update-announcement", methods=["POST"])
 # @auth.login_required
+@limiter.limit("3/hour")
+@limiter.limit("2/minute")
+@limiter.limit("1/second")
 def update_announcement():
     req_data = request.get_json()
     ann_data = req_data['ann_body']
+    censored_ad = pf.censor(ann_data)
     ann = Ann.query.first()
-    ann.title = ann_data
+    ann.title = censored_ad
     db.session.commit()
     return "Announcement Updated"
 
 @App.route('/get-harold', methods=['GET', 'POST'])
-@Limiter.limit("14/minute")
+@limiter.limit("13/minute")
+@limiter.limit("1/second")
 def get_harold():
     if request.method == 'POST':
         init_dbf()
@@ -171,7 +180,8 @@ if __name__ == '__main__':
     App.run(debug=True)
 
 @App.route('/showerthoughts', methods=['GET'])
-@Limiter.limit("2/minute")
+@limiter.limit("3/minute")
+@limiter.limit("1/second")
 def showerthoughts():
     randompost = random.randint(1, 20)
     url = requests.get(
@@ -180,6 +190,6 @@ def showerthoughts():
     )
     reddit = json.loads(url.text)
     shower_thoughts = textwrap.fill((reddit['data']['children'][randompost]['data']['title']), 50)
-    censored = pf.censor(shower_thoughts)
-    s_t = {'data': censored}
+    censored_st = pf.censor(shower_thoughts)
+    s_t = {'data': censored_st}
     return jsonify(s_t)

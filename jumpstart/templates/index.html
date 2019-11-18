@@ -20,9 +20,12 @@
         <div class="row" id="top-bar" align="left">
             <iframe style="-webkit-transform-origin: 8%  65%; -webkit-transform: scale(.50,.50); float: left;" src="https://free.timeanddate.com/clock/i6zogrqs/n179/fn8/fs45/fcfcf6fa/tct/pct/ahl/ftb/tt0/tm3/th2/ts1/tb1" frameborder="0" width="850" height="53" allowTransparency="true"></iframe>
         </div>
+        <!-- Left Set (DD, Announce, Weather, Show T) -->
         <div class="row justify-content-around">
             <div class="col-md-10" style="align-content: left; overflow: hidden;" align="left">
+                <!-- DataDog -->
                 <iframe class="datadog" scrolling="no" frameborder="0" src="https://p.datadoghq.com/sb/44f16805b-cab847d58c?tv_mode=true"></iframe>
+                <!-- Announcements -->
                 <div class="announcements">
                     <div class="panel panel-primary" style="overflow: hidden;">
                         <div class="panel-heading">
@@ -48,20 +51,43 @@
                         </div>
                         <div class="panel-body">
                             <div class="plug-body">
-                                <b><span class="shower-thoughts-text-body" id="showerthoughts">Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.</span></b>
+                                <b><span class="shower-thoughts-text-body" id="showerthoughts">Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.</span></b>
                             </div>
                         </div>
                     </div>
                 </div>
             </div>
+            <!-- Right Set (Calendar) -->
             <div class="col-md-2">
                 <div class="calendar-frame-lvl1" style="float: right;" width="" height="940" frameborder="0" scrolling="no">
+                    <!-- Calendar spawner -->
                     <b><div id="calendar"></div></b>
                 </div>
             </div>
         </div>
     </div>
 <script type=text/javascript>
+setInterval('__weatherwidget_init()', 360000)
+
+setInterval(function(){
+var date = new Date();
+
+    if(9 < date.getHours() && date.getHours() < 18){
+        $(".panel-body").css("background-color", "white");
+        $(".plug-body").css("background-color", "white");
+        $(".shower-thoughts-text-body").css("background-color", "white");
+        $(".shower-thoughts-text-body").css("color", "black");
+        $(".announcements-text-body").css("color", "#34495e");
+    }else{
+        // $(".calendar-event-container-lvl2").css("background-color", "black");
+        $(".panel-body").css("background-color", "black");
+        $(".plug-body").css("background-color", "black");
+        $(".shower-thoughts-text-body").css("background-color", "black");
+        $(".shower-thoughts-text-body").css("color", "white");
+        $(".announcements-text-body").css("color", "white");
+    }
+}, 5000);
+
 setInterval(function(){
     var date = new Date();
 
@@ -74,6 +100,17 @@ setInterval(function(){
     }else{
         $("body").css("background-image", "url(../static/css/darkmode.png)");
     }
+
+    fetch('/calendar', {
+        method: 'GET',
+        mode:'no-cors',
+        dataType: 'json'
+    })
+    .then(r => r.json())
+    .then(r => {
+        $("#calendar").html(r.data)
+    })
+    .catch(err => console.log(err))
 
     fetch('/showerthoughts', {
         method: 'GET',
@@ -90,18 +127,6 @@ setInterval(function(){
 
 
 setInterval(function(){ 
-    fetch('/calendar', {
-        method: 'GET',
-        mode:'no-cors',
-        dataType: 'json'
-    })
-    .then(r => r.json())
-    .then(r => {
-        $("#calendar").html(r.data)
-    })
-    .catch(err => console.log(err))
-
-
     fetch('/get-harold', {
         method: 'GET',
         mode:'no-cors',
@@ -120,13 +145,10 @@ setInterval(function(){
     })
     .then(r => r.json())
     .then(r => {
-        $("#announcement").text(r.data.substring(0, 921))
+        $("#announcement").text(r.data.substring(0, 910))
     })
     .catch(err => console.log(err))
-
 }, 5000);
-
-setInterval('__weatherwidget_init()', 360000)
 </script>
 </body>
 </html>
