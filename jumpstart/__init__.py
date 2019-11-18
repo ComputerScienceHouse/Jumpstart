@@ -137,10 +137,9 @@ def get_announcement():
     if request.method == 'POST':
         init_dba()
         return "It worked"
-    else: 
-        ann = Ann.query.first()
-        announcement_post = {'data' : str(ann)}
-        return jsonify(announcement_post)
+    ann = Ann.query.first()
+    announcement_post = {'data' : str(ann)}
+    return jsonify(announcement_post)
 
 @App.route("/update-announcement", methods=["POST"])
 # @auth.login_required
@@ -150,9 +149,8 @@ def get_announcement():
 def update_announcement():
     req_data = request.get_json()
     ann_data = req_data['ann_body']
-    censored_ad = pf.censor(ann_data)
     ann = Ann.query.first()
-    ann.title = censored_ad
+    ann.title = ann_data
     db.session.commit()
     return "Announcement Updated"
 
@@ -163,10 +161,9 @@ def get_harold():
     if request.method == 'POST':
         init_dbf()
         return "It worked"
-    else:
-        file = File.query.first()
-        filename = {'data': str(file)}
-        return jsonify(filename)
+    file = File.query.first()
+    filename = {'data': str(file)}
+    return jsonify(filename)
 
 @App.route("/update-harold", methods=["POST"])
 @auth.login_required
