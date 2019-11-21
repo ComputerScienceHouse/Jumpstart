@@ -55,7 +55,7 @@ body{
 }
 
 .announcements-text-body{
-    color: #34495e;
+    color: black;
     font-family: 'Courier New', Courier, monospace;
     font-size: 18px;
     text-align: center;
@@ -75,7 +75,7 @@ body{
 }
 
 .shower-thoughts-text-body{
-    color: #34495e;
+    color: black;
     font-family: 'Courier New', Courier, monospace;
     font-size: 18px;
     text-align: center;
