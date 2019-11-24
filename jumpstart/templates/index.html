@@ -70,36 +70,6 @@
 // Weather Widget refresh
 setInterval('__weatherwidget_init()', 360000)
 
-// Dark Mode styling
-setInterval(function(){
-var date = new Date();
-
-    if(9 < date.getHours() && date.getHours() < 18){
-        $(".panel-body").css("background-color", "whitea");
-        $(".plug-body").css("background-color", "whitea");
-        $(".shower-thoughts-text-body").css("background-color", "whitea");
-        $(".shower-thoughts-text-body").css("color", "black");
-        $(".announcements-text-body").css("color", "black");
-        $(".calendar-frame-lvl1").css("background-color", "white")
-        $(".calendar-text-date").css("color", "black")
-        $(".calendar-text").css("color", "black")
-
-        $("#datadog").attr('src','https://p.datadoghq.com/sb/44f16805b-cab847d58c?tv_mode=true&theme=light&' + new Date().getTime());
-    }else{
-        // $(".calendar-event-container-lvl2").css("background-color", "black");
-        $(".panel-body").css("background-color", "black");
-        $(".plug-body").css("background-color", "black");
-        $(".shower-thoughts-text-body").css("background-color", "black");
-        $(".shower-thoughts-text-body").css("color", "white");
-        $(".announcements-text-body").css("color", "white");
-        $(".calendar-frame-lvl1").css("background-color", "black")
-        $(".calendar-text-date").css("color", "white")
-        $(".calendar-text").css("color", "white")
-
-        $("#datadog").attr('src','https://p.datadoghq.com/sb/44f16805b-cab847d58c?tv_mode=true&theme=dark&' + new Date().getTime());
-    }
-}, 180000);
-
 // Date background changes
 setInterval(function(){
     var date = new Date();
@@ -114,10 +84,12 @@ setInterval(function(){
         $("body").css("background-image", "url(../static/css/darkmodeN.png)");
     }
     
-}, 180000);
+}, 1800);
 
 // Calendar and shower thoughts refresh
 setInterval(function(){
+
+var date = new Date();
 
     fetch('/calendar', {
         method: 'GET',
@@ -127,6 +99,30 @@ setInterval(function(){
     .then(r => r.json())
     .then(r => {
         $("#calendar").html(r.data)
+        if(9 < date.getHours() && date.getHours() < 18){
+            $(".panel-body").css("background-color", "white");
+            $(".plug-body").css("background-color", "white");
+            $(".shower-thoughts-text-body").css("background-color", "white");
+            $(".shower-thoughts-text-body").css("color", "black");
+            $(".announcements-text-body").css("color", "black");
+            $(".calendar-frame-lvl1").css("background-color", "white")
+            $(".calendar-text-date").css("color", "black")
+            $(".calendar-text").css("color", "black")
+
+            $("#datadog").attr('src','https://p.datadoghq.com/sb/44f16805b-cab847d58c?tv_mode=true&theme=light&' + new Date().getTime());
+        }else{
+            // $(".calendar-event-container-lvl2").css("background-color", "black");
+            $(".panel-body").css("background-color", "black");
+            $(".plug-body").css("background-color", "black");
+            $(".shower-thoughts-text-body").css("background-color", "black");
+            $(".shower-thoughts-text-body").css("color", "white");
+            $(".announcements-text-body").css("color", "white");
+            $(".calendar-frame-lvl1").css("background-color", "black")
+            $(".calendar-text-date").css("color", "white")
+            $(".calendar-text").css("color", "white")
+
+            $("#datadog").attr('src','https://p.datadoghq.com/sb/44f16805b-cab847d58c?tv_mode=true&theme=dark&' + new Date().getTime());
+        }
     })
     .catch(err => console.log(err))
 
@@ -141,7 +137,7 @@ setInterval(function(){
     })
     .catch(err => console.log(err))
 
-}, 180000);
+}, 30000);
 
 // Harold and announcement refresh
 setInterval(function(){ 
