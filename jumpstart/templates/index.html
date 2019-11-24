@@ -80,6 +80,9 @@ var date = new Date();
         $(".shower-thoughts-text-body").css("background-color", "white");
         $(".shower-thoughts-text-body").css("color", "black");
         $(".announcements-text-body").css("color", "black");
+        $(".calendar-frame-lvl1").css("background-color", "#fcf6fa")
+        $(".calendar-text-date").css("background-color", "#fcf6fa")
+        $(".calendar-text").css("background-color", "#fcf6fa")
 
         $("#datadog").attr('src','https://p.datadoghq.com/sb/44f16805b-cab847d58c?tv_mode=true&theme=light&' + new Date().getTime());
     }else{
@@ -89,7 +92,10 @@ var date = new Date();
         $(".shower-thoughts-text-body").css("background-color", "black");
         $(".shower-thoughts-text-body").css("color", "white");
         $(".announcements-text-body").css("color", "white");
-        
+        $(".calendar-frame-lvl1").css("background-color", "black")
+        $(".calendar-text-date").css("color", "white")
+        $(".calendar-text").css("color", "white")
+
         $("#datadog").attr('src','https://p.datadoghq.com/sb/44f16805b-cab847d58c?tv_mode=true&theme=dark&' + new Date().getTime());
     }
 }, 180000);
@@ -135,7 +141,7 @@ setInterval(function(){
     })
     .catch(err => console.log(err))
 
-}, 30000);
+}, 300000);
 
 // Harold and announcement refresh
 setInterval(function(){ 
