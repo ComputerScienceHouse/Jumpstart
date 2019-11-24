@@ -75,14 +75,14 @@ setInterval(function(){
 var date = new Date();
 
     if(9 < date.getHours() && date.getHours() < 18){
-        $(".panel-body").css("background-color", "white");
-        $(".plug-body").css("background-color", "white");
-        $(".shower-thoughts-text-body").css("background-color", "white");
+        $(".panel-body").css("background-color", "whitea");
+        $(".plug-body").css("background-color", "whitea");
+        $(".shower-thoughts-text-body").css("background-color", "whitea");
         $(".shower-thoughts-text-body").css("color", "black");
         $(".announcements-text-body").css("color", "black");
-        $(".calendar-frame-lvl1").css("background-color", "#fcf6fa")
-        $(".calendar-text-date").css("background-color", "#fcf6fa")
-        $(".calendar-text").css("background-color", "#fcf6fa")
+        $(".calendar-frame-lvl1").css("background-color", "white")
+        $(".calendar-text-date").css("color", "black")
+        $(".calendar-text").css("color", "black")
 
         $("#datadog").attr('src','https://p.datadoghq.com/sb/44f16805b-cab847d58c?tv_mode=true&theme=light&' + new Date().getTime());
     }else{
@@ -141,7 +141,7 @@ setInterval(function(){
     })
     .catch(err => console.log(err))
 
-}, 300000);
+}, 180000);
 
 // Harold and announcement refresh
 setInterval(function(){ 
