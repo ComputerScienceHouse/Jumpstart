@@ -68,7 +68,7 @@
     </div>
 <script type="text/javascript">
 // Weather Widget refresh
-setInterval('__weatherwidget_init()', 360000)
+setInterval('__weatherwidget_init()', 3600000)
 
 // Date background changes
 setInterval(function(){
@@ -83,13 +83,6 @@ setInterval(function(){
     }else{
         $("body").css("background-image", "url(../static/css/darkmodeN.png)");
     }
-    
-}, 1800);
-
-// Calendar and shower thoughts refresh
-setInterval(function(){
-
-var date = new Date();
 
     fetch('/calendar', {
         method: 'GET',
@@ -125,6 +118,13 @@ var date = new Date();
         }
     })
     .catch(err => console.log(err))
+    
+}, 1800000);
+
+// Calendar and shower thoughts refresh
+setInterval(function(){
+
+var date = new Date();
 
     fetch('/showerthoughts', {
         method: 'GET',
