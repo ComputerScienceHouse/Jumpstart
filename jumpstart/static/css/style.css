@@ -18,9 +18,14 @@ body{
     font-size: 30px;
 }
 
+.timewidget{
+    width: 900px;
+    height: 53px;
+}
+
 .weatherwidget{
     float: right;
-    width: 760px;
+    width: 49%;
     border: 8px #34495e solid;
     border-radius: 10px;
 }
@@ -107,4 +112,151 @@ body{
     color: black;
     font-family: 'Courier New', Courier, monospace;
     font-size: 19px;
+}
+
+@media screen and (max-width: 1899px) {
+    .shower-thoughts{
+        width: 49%;
+        padding-top: 1%;
+    }
+    .datadog{
+        /*margin-top: 25%;*/
+        opacity: 0;
+        visibility: hidden;
+        display: none;
+    }
+}
+
+@media screen and (max-width: 1329px) {
+    .announcements-text-header{
+        font-size: 16px;
+    }
+    .announcements-text-body{
+        font-size: 14px;
+    }
+}
+
+@media screen and (max-width: 979px) {
+    .announcements{
+        padding-top: 2%;
+        width: 100%;
+    }
+    .weatherwidget{
+/*        margin-top: 2%;
+*/        width: 100%;
+    }
+    .shower-thoughts{
+        width: 100%;
+        padding-top: 2%;
+    }
+    .calendar-frame-lvl1{
+        opacity: 0;
+        visibility: hidden;
+        display: none;
+    }
+}
+
+@media screen and (max-width: 1899px) and (min-width: 1700px) {
+    .announcements{
+        padding-top: 25%;
+    }
+    .announcements-text-header{
+        font-size: 22px;
+    }
+    .announcements-text-body{
+        font-size: 20px;
+    }
+    .weatherwidget{
+        margin-top: 25%;
+    }
+}
+
+@media screen and (max-width: 1699px) and (min-width: 1500px) {
+    .announcements{
+        padding-top: 30%;
+    }
+    .announcements-text-header{
+        font-size: 20px;
+    }
+    .announcements-text-body{
+        font-size: 18px;
+    }
+    .weatherwidget{
+        margin-top: 30%;
+    }
+}
+
+@media screen and (max-width: 1499px) and (min-width: 1330px) {
+    .announcements{
+        padding-top: 35%;
+    }
+    .announcements-text-header{
+        font-size: 18px;
+    }
+    .announcements-text-body{
+        font-size: 16px;
+    }
+    .weatherwidget{
+        margin-top: 35%;
+    }
+}
+
+@media screen and (max-width: 1329px) and (min-width: 1080px) {
+    .announcements{
+        padding-top: 40%;
+    }
+    .weatherwidget{
+        margin-top: 40%;
+    }
+}
+
+@media screen and (max-width: 1079px) and (min-width: 980px) {
+    .announcements{
+        padding-top: 43%;
+    }
+    .weatherwidget{
+        margin-top: 43%;
+    }
+}
+
+@media screen and (max-width: 979px) and (min-width: 880px) {
+    .announcements{
+        padding-top: 47%;
+    }
+}
+
+@media screen and (max-width: 879px) and (min-width: 780px) {
+    .announcements{
+        padding-top: 53%;
+    }
+}
+
+@media screen and (max-width: 779px) and (min-width: 680px) {
+    .announcements{
+        padding-top: 57%;
+    }
+}
+
+@media screen and (max-width: 679px) and (min-width: 580px) {
+    .announcements{
+        padding-top: 63%;
+    }
+}
+
+@media screen and (max-width: 579px) and (min-width: 480px) {
+    .announcements{
+        padding-top: 67%;
+    }
+}
+
+@media screen and (max-width: 479px) and (min-width: 380px) {
+    .announcements{
+        padding-top: 73%;
+    }
+}
+
+@media screen and (max-width: 379px) {
+    .announcements{
+        padding-top: 77%;
+    }
 }
