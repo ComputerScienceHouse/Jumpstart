@@ -158,9 +158,6 @@ def update_announcement():
 @limiter.limit("13/minute")
 @limiter.limit("1/second")
 def get_harold():
-    # if request.method == 'POST':
-    #     init_dbf()
-    #     return "It worked"
     file = File.query.first()
     filename = {'data': str(file)}
     return jsonify(filename)
@@ -176,8 +173,6 @@ def update_harold():
     return "Harold File Updated"
 
 if __name__ == '__main__':
-    init_dbf()
-    init_dba()
     App.run(debug=True)
 
 @App.route('/showerthoughts', methods=['GET'])
@@ -194,3 +189,11 @@ def showerthoughts():
     censored_st = pf.censor(shower_thoughts)
     s_t = {'data': censored_st}
     return jsonify(s_t)
+
+@App.route("/db", methods=["POST"])
+@auth.login_required
+def initDB():
+    if request.method == 'POST':
+        init_dbf()
+        init_dba()
+        return "It worked"
