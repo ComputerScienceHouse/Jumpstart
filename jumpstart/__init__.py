@@ -130,13 +130,10 @@ def calendar():
     event_list = {'data': final_events}
     return jsonify(event_list)
 
-@App.route('/get-announcement', methods=['GET', 'POST'])
+@App.route('/get-announcement', methods=['GET'])
 @limiter.limit("13/minute")
 @limiter.limit("1/second")
 def get_announcement():
-    if request.method == 'POST':
-        init_dba()
-        return "It worked"
     ann = Ann.query.first()
     announcement_post = {'data' : str(ann)}
     return jsonify(announcement_post)
@@ -154,13 +151,10 @@ def update_announcement():
     db.session.commit()
     return "Announcement Updated"
 
-@App.route('/get-harold', methods=['GET', 'POST'])
+@App.route('/get-harold', methods=['GET'])
 @limiter.limit("13/minute")
 @limiter.limit("1/second")
 def get_harold():
-    if request.method == 'POST':
-        init_dbf()
-        return "It worked"
     file = File.query.first()
     filename = {'data': str(file)}
     return jsonify(filename)
@@ -192,3 +186,11 @@ def showerthoughts():
     censored_st = pf.censor(shower_thoughts)
     s_t = {'data': censored_st}
     return jsonify(s_t)
+
+@App.route('/unlock', methods=['POST'])
+@auth.login_required
+def unlock():
+    if request.method == 'POST':
+        init_dbf()
+        init_dba()
+        return "It worked"
