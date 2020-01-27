@@ -19,7 +19,8 @@
     <div class="container-fluid">
         <div class="row" id="top-bar" align="left">
             <iframe class="timewidget" style="-webkit-transform-origin: 8%  65%; -webkit-transform: scale(.50,.50); float: left;" src="https://free.timeanddate.com/clock/i6zogrqs/n179/fn8/fs45/fcfcf6fa/tct/pct/ahl/ftb/tt0/tm3/th2/ts1/tb1" frameborder="0" allowTransparency="true"></iframe>
-            <b style="margin-top: 10px; float: left;"><span class="file-title">jumpstart.csh.rit.edu</span></b>
+            <b style="margin-top: 10px; float: left;"><span class="js-title">jumpstart.csh.rit.edu</span></b>
+            <!-- <b style="margin-top: 10px; float: left;"><span class="file-title">jumpstart.csh.rit.edu</span></b> -->
         </div>
         <!-- Left Set (DD, Announce, Weather, Show T) -->
         <div class="row justify-content-around">
@@ -71,7 +72,11 @@
 function longUpdate(){
     var date = new Date();
 
-    if (date.getMonth()+1 == 10 && (date.getDate() == 29 || date.getDate() == 30 || date.getDate() == 31) ){
+    if (date.getMonth()+1 == 2 && (date.getDate() == 12 || date.getDate() == 13) ){
+        $("body").css("background-image", "url(../static/css/valentinemode.png)");
+    }else if (date.getMonth()+1 == 2 && (date.getDate() == 14) ){
+        $("body").css("background-image", "url(../static/css/valentinemode_b.png)");
+    }else if (date.getMonth()+1 == 10 && (date.getDate() == 29 || date.getDate() == 30 || date.getDate() == 31) ){
         $("body").css("background-image", "url(../static/css/spookymode.png)");
     }else if(date.getMonth()+1 == 11 && (date.getDate() == 2)){
         $("body").css("background-image", "url(../static/css/duckymode2.png)");
@@ -163,12 +168,12 @@ longUpdate();
 // Date background changes
 setInterval(function(){
     longUpdate();   
-}, 1800000);
+}, 180000);
 
 // Calendar and shower thoughts refresh
 setInterval(function(){
     mediumUpdate();
-}, 30000);
+}, 15000);
 
 // Harold and announcement refresh
 setInterval(function(){ 
@@ -176,7 +181,7 @@ setInterval(function(){
 }, 5000);
 
 // Weather Widget refresh
-setInterval('__weatherwidget_init()', 3600000)
+setInterval('__weatherwidget_init()', 1800000)
 </script>
 </body>
 </html>

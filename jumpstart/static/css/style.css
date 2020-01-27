@@ -18,6 +18,12 @@ body{
     font-size: 30px;
 }
 
+.js-title{
+    color: #fcf6fa;
+    font-family: 'Courier New', Courier, monospace;
+    font-size: 30px;
+}
+
 .timewidget{
     width: 900px;
     height: 53px;
@@ -133,6 +139,9 @@ body{
     }
     .announcements-text-body{
         font-size: 14px;
+    }
+    .js-title{
+        display: none;
     }
 }
 
