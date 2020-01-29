@@ -12,20 +12,29 @@ body{
     background-color: #34495e;
 }
 
+#timewidget-fake{
+    display: none;
+}
+
 .file-title{
     color: #fcf6fa;
     font-family: 'Courier New', Courier, monospace;
-    font-size: 30px;
+    font-size: 28px;
+    border-left: 5px #B0197E solid;
+    float: right;
+    width: 29%;
 }
 
 .js-title{
     color: #fcf6fa;
     font-family: 'Courier New', Courier, monospace;
     font-size: 30px;
+    border-left: 5px #B0197E solid;
+    float: right;
 }
 
 .timewidget{
-    width: 900px;
+    width: 400px;
     height: 53px;
 }
 
@@ -131,6 +140,9 @@ body{
         visibility: hidden;
         display: none;
     }
+    .js-title{
+        display: none;
+    }
 }
 
 @media screen and (max-width: 1329px) {
@@ -140,7 +152,13 @@ body{
     .announcements-text-body{
         font-size: 14px;
     }
-    .js-title{
+    .file-title{
+        display: none;
+    }
+    #timewidget-fake{
+        display: inherit;
+    }
+    #timewidget-real{
         display: none;
     }
 }
