@@ -62,12 +62,24 @@ def init_dbf():
     db.session.add(file)
     db.session.commit()
 
+file = File(title="Jumpstart.exe")
+db.session.query(File).delete()
+db.session.commit()
+db.session.add(file)
+db.session.commit()
+
 def init_dba():
     ann = Ann(title="Have a great day!")
     db.session.query(Ann).delete()
     db.session.commit()
     db.session.add(ann)
     db.session.commit()
+
+ann = Ann(title="Have a great day!")
+db.session.query(Ann).delete()
+db.session.commit()
+db.session.add(ann)
+db.session.commit()
 
 @auth.verify_token
 def verify_token(token):
