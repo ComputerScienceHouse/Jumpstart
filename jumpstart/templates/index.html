@@ -79,10 +79,12 @@
 function longUpdate(){
     var date = new Date();
 
-    if (date.getMonth()+1 == 2 && (date.getDate() == 12 || date.getDate() == 13) ){
+    if (date.getMonth()+1 == 2 && (date.getDate() == 12) ){
         $("body").css("background-image", "url(../static/css/valentinemode.png)");
-    }else if (date.getMonth()+1 == 2 && (date.getDate() == 14) ){
+    }else if (date.getMonth()+1 == 2 && (date.getDate() == 13) ){
         $("body").css("background-image", "url(../static/css/valentinemode_b.png)");
+    }else if (date.getMonth()+1 == 2 && (date.getDate() == 14) ){
+        $("body").css("background-image", "url(../static/css/valentinemodeN.png)");
     }else if (date.getMonth()+1 == 10 && (date.getDate() == 29 || date.getDate() == 30 || date.getDate() == 31) ){
         $("body").css("background-image", "url(../static/css/spookymode.png)");
     }else if(date.getMonth()+1 == 11 && (date.getDate() == 2)){
