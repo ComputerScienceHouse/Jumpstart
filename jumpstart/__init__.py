@@ -55,26 +55,13 @@ if not os.path.exists(os.path.join(os.getcwd(), "site.db")):
     db.create_all()
 
 # Initializes the database for Files
-def init_dbf():
-    file = File(title="Jumpstart.exe")
-    db.session.query(File).delete()
-    db.session.commit()
-    db.session.add(file)
-    db.session.commit()
-
 file = File(title="Jumpstart.exe")
 db.session.query(File).delete()
 db.session.commit()
 db.session.add(file)
 db.session.commit()
 
-def init_dba():
-    ann = Ann(title="Have a great day!")
-    db.session.query(Ann).delete()
-    db.session.commit()
-    db.session.add(ann)
-    db.session.commit()
-
+# Initializes the database for Announcements
 ann = Ann(title="Have a great day!")
 db.session.query(Ann).delete()
 db.session.commit()
@@ -199,11 +186,3 @@ def showerthoughts():
     censored_st = pf.censor(shower_thoughts)
     s_t = {'data': censored_st}
     return jsonify(s_t)
-
-@App.route('/unlock', methods=['POST'])
-@auth.login_required
-def unlock():
-    if request.method == 'POST':
-        init_dbf()
-        init_dba()
-        return "It worked"
