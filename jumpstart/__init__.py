@@ -41,8 +41,7 @@ sentry_sdk.init(
 App = Flask(__name__)
 
 auth = HTTPTokenAuth(scheme='Token')
-api_keys = "728e6bbf158249f3b09ceda421078c2a"
-# api_keys = os.environ.get('JUMPSTART_API_KEYS')
+api_keys = os.environ.get('JUMPSTART_API_KEYS')
 
 tokens = api_keys.split(',') if api_keys else []
 App.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = True
