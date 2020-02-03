@@ -177,7 +177,7 @@ if __name__ == '__main__':
 def showerthoughts():
     randompost = random.randint(1, 20)
     url = requests.get(
-        'https://www.reddit.com/r/showerthoughts/new.json',
+        'https://www.reddit.com/r/showerthoughts/top.json',
         headers={'User-agent':'Showerthoughtbot 0.1'},
     )
     reddit = json.loads(url.text)
