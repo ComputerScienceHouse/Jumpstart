@@ -9,7 +9,7 @@ import re
 import json
 import random
 import textwrap
-from datetime import datetime, timedelta, timezone
+from datetime import datetime, timedelta, timezone, tzinfo
 from sentry_sdk.integrations.flask import FlaskIntegration
 import sentry_sdk
 import requests
@@ -111,7 +111,12 @@ def calendar():
     for event in events:
         start = event['start'].get('dateTime', event['start'].get('date'))
         fin_date = parser.parse(start)
-        delta = fin_date - now
+        try:
+            delta = fin_date - now
+        except:
+            d = datetime.utcnow()
+            delta = fin_date - d
+
         formatted = format_timedelta(delta) if delta > timedelta(0) else "------"
 
         final_events += (
