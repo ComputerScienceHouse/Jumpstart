@@ -34,8 +34,8 @@ pf = ProfanityFilter()
 # pf.censor_char = ''
 
 sentry_sdk.init(
-    dsn="https://51494372c5b94b7cbf2d3e246da4f127@sentry.io/1818983",
-    integrations=[FlaskIntegration()]
+    dsn = os.environ.get('SENTRY_DSN'),
+    integrations = [FlaskIntegration()]
 )
 
 App = Flask(__name__)
