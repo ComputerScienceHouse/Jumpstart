@@ -11,7 +11,7 @@ This project uses [Python](http://nodejs.org), [Flask](https://npmjs.com), SQL, 
 
 1. Download the zip file and open the code.
 2. Navigate into the folder.
-3. Run `flask install -r requirements.txt`
+3. Run `pip install -r requirements.txt`
 4. Run `flask run`
 5. Results
 
