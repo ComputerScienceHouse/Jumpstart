@@ -9,9 +9,11 @@ A graphical interface that runs on a RPI in the lobby of my dorm.
 
 This project uses [Python](http://nodejs.org), [Flask](https://npmjs.com), SQL, HTML/CSS, and Javascript. 
 
-1. Go to the Slack App store
-2. Look up AutoReact
-3. Download it to your workspace
+1. Download the zip file and open the code.
+2. Navigate into the folder.
+3. Run `flask install -r requirements.txt`
+4. Run `flask run`
+5. Results
 
 ## Usage
 
