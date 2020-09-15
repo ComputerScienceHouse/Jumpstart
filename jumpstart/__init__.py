@@ -54,7 +54,7 @@ if not os.path.exists(os.path.join(os.getcwd(), "site.db")):
     db.create_all()
 
 # Initializes the database for Files
-file = File(title="Jumpstart.exe")
+file = File(title="drno")
 db.session.query(File).delete()
 db.session.commit()
 db.session.add(file)
