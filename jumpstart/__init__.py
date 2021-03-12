@@ -180,14 +180,13 @@ if __name__ == '__main__':
 @limiter.limit("3/minute")
 @limiter.limit("1/second")
 def showerthoughts():
-    try:
-        randompost = random.randint(1, 20)
-        url = requests.get(
-            'https://www.reddit.com/r/showerthoughts/top.json',
-            headers={'User-agent':'Showerthoughtbot 0.1'},
-        )
-        reddit = json.loads(url.text)
-        shower_thoughts = textwrap.fill((reddit['data']['children'][randompost]['data']['title']), 50)
-        censored_st = pf.censor(shower_thoughts)
-        s_t = {'data': censored_st}
-        return jsonify(s_t)
+    randompost = random.randint(1, 20)
+    url = requests.get(
+        'https://www.reddit.com/r/showerthoughts/top.json',
+         headers={'User-agent':'Showerthoughtbot 0.1'},
+    )
+    reddit = json.loads(url.text)
+    shower_thoughts = textwrap.fill((reddit['data']['children'][randompost]['data']['title']), 50)
+    censored_st = pf.censor(shower_thoughts)
+    s_t = {'data': censored_st}
+    return jsonify(s_t)
