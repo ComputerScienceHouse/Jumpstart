@@ -80,7 +80,9 @@ function longUpdate(){
 
     if (date.getMonth()+1 == 2 && (date.getDate() == 12 || date.getDate() == 13 || date.getDate() == 14) ){
         $("body").css("background-image", "url(../static/css/valentinemode.png)");
-    }else if (date.getMonth()+1 == 10){
+    }else if (date.getMonth()+1 == 3 && (date.getDate() == 12) ){
+        $("body").css("background-image", "url(../static/css/jumpstartbang.png)");
+    }else if (date.getMonth()+1 == 10 && (date.getDate() == 29 || date.getDate() == 30 || date.getDate() == 31) ){
         $("body").css("background-image", "url(../static/css/spookymode.png)");
     }else if(date.getMonth()+1 == 11 && date.getDate() == 2){
         $("body").css("background-image", "url(../static/css/duckymode2.png)");
