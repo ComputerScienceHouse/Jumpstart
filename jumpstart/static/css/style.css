@@ -47,11 +47,12 @@ body{
 }
 
 .datadog{
+    background-color: white;
     margin-top: 20px;
-    overflow: auto;
+    overflow: hidden;
     border: 8px #34495e solid;
     border-radius: 10px;
-    width: 760px;
+    width: 49.5%;
     height: 580px;
     float: right;
     margin-bottom: 4%;
@@ -60,9 +61,7 @@ body{
 .announcements{
     float: left;
     width: 50%;
-    padding-top: 22%;
     padding-left: 1%;
-    min-height: 840px;
     overflow: hidden;
     word-wrap: break-word;
 }
