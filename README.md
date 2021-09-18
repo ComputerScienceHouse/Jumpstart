@@ -15,6 +15,8 @@ This project uses [Python](http://nodejs.org), [Flask](https://npmjs.com), SQL, 
 4. Run `flask run`
 5. Results
 
+TALK TO AUTHOR ABOUT SECRETS PACKAGE TO RUN THE PROGRAM
+
 ## Usage
 
 Go [here](https://jumpstart.csh.rit.edu)
