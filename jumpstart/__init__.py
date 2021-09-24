@@ -10,6 +10,7 @@ import json
 import random
 import textwrap
 from datetime import datetime, timedelta, timezone, tzinfo
+import pytz
 from sentry_sdk.integrations.flask import FlaskIntegration
 import sentry_sdk
 import requests
@@ -54,7 +55,7 @@ if not os.path.exists(os.path.join(os.getcwd(), "site.db")):
     db.create_all()
 
 # Initializes the database for Files
-file = File(title="drno")
+file = File(title="Jumpstart.exe")
 db.session.query(File).delete()
 db.session.commit()
 db.session.add(file)
@@ -94,7 +95,7 @@ def index():
 def calendar():
 
     # Call the Calendar API
-    now = datetime.now(timezone.utc)
+    now = datetime.now(timezone.utc or pytz.utc)
     events_result = calendar_service.events().list(
         calendarId='rti648k5hv7j3ae3a3rum8potk@group.calendar.google.com',
         timeMin=now.isoformat(),
@@ -183,7 +184,7 @@ def showerthoughts():
     randompost = random.randint(1, 20)
     url = requests.get(
         'https://www.reddit.com/r/showerthoughts/top.json',
-         headers={'User-agent':'Showerthoughtbot 0.1'},
+        headers={'User-agent':'Showerthoughtbot 0.1'},
     )
     reddit = json.loads(url.text)
     shower_thoughts = textwrap.fill((reddit['data']['children'][randompost]['data']['title']), 50)
