@@ -3,6 +3,7 @@ body{
 }
 
 .panel-primary{
+    background: #34495e;
     border: 8px #34495e solid ;
     border-radius: 10px;
 }
@@ -34,7 +35,7 @@ body{
 }
 
 .timewidget{
-    width: 400px;
+    width: 800px;
     height: 53px;
 }
 

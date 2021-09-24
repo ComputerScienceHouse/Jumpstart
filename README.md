@@ -11,9 +11,14 @@ This project uses [Python](http://nodejs.org), [Flask](https://npmjs.com), SQL, 
 
 1. Download the zip file and open the code.
 2. Navigate into the folder.
-3. Run `flask install -r requirements.txt`
+3. Run `pip install -r requirements.txt`
 4. Run `flask run`
-5. Results
+5. DM @drno in CSH slack, or email for secrets package
+    - The secrets package follows the directory structure:
+    src/
+      secrets/
+        client_secrets.json
+6. Results
 
 ## Usage
 

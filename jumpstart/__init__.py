@@ -54,7 +54,7 @@ if not os.path.exists(os.path.join(os.getcwd(), "site.db")):
     db.create_all()
 
 # Initializes the database for Files
-file = File(title="Jumpstart.exe")
+file = File(title="drno")
 db.session.query(File).delete()
 db.session.commit()
 db.session.add(file)
@@ -183,7 +183,7 @@ def showerthoughts():
     randompost = random.randint(1, 20)
     url = requests.get(
         'https://www.reddit.com/r/showerthoughts/top.json',
-        headers={'User-agent':'Showerthoughtbot 0.1'},
+         headers={'User-agent':'Showerthoughtbot 0.1'},
     )
     reddit = json.loads(url.text)
     shower_thoughts = textwrap.fill((reddit['data']['children'][randompost]['data']['title']), 50)
