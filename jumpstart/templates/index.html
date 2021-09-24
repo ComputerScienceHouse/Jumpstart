@@ -1,193 +1,194 @@
 <!DOCTYPE html>
 <html lang="en-US">
-<head>
-    <title>Jumpstart</title>
-    <!-- Metta -->
-    <meta charset="utf-8">
-    <meta name="viewport" user-scalable=false content="width=device-width, initial-scale=1"/>
-    <meta name="theme-color" content="#B0197E">
-    <!-- Linking to stylesheets, scriptsheets, and apis -->
-    <link rel="stylesheet" href="https://assets.csh.rit.edu/csh-material-bootstrap/3.3.6/dist/csh-material-bootstrap.min.css">
-    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
-    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
-    <link rel="shortcut icon" href="https://assets.csh.rit.edu/uploads/favicon.ico" type="image/x-icon">
-</head>
-<body>
-    <!-- App container -->
-    <div class="container-fluid">
-        <div class="row d-flex" id="top-bar">
-            <iframe class="timewidget" id="timewidget-fake" style="padding: 17px 10px 0; float: left;" src="https://freesecure.timeanddate.com/clock/i6zogrqs/n179/fn8/fs20/fcfcf6fa/tct/pct/ahl/ftb/tt0/tm3/th2/ts1/tb1" frameborder="0" width="447" height="25" allowTransparency="true"></iframe>
-            <div class="mr-auto">
-                <iframe class="timewidget" id="timewidget-real" style="padding: 8px 10px 0; float: left;" src="https://free.timeanddate.com/clock/i7yyk735/n421/fn8/fs32/fcfff/tct/pct/ahl/ftb/pl10/pr0/pt0/pb0/tt0/tm3/ts1" frameborder="0" width="985" height="50" allowTransparency="true"></iframe>
+    <head>
+        <title>Jumpstart</title>
+        <!-- Metta -->
+        <meta charset="utf-8">
+        <meta name="viewport" user-scalable=false content="width=device-width, initial-scale=1"/>
+        <meta name="theme-color" content="#B0197E">
+        <!-- Linking to stylesheets, scriptsheets, and apis -->
+        <link rel="stylesheet" href="https://assets.csh.rit.edu/csh-material-bootstrap/3.3.6/dist/csh-material-bootstrap.min.css">
+        <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+        <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+        <link rel="shortcut icon" href="https://assets.csh.rit.edu/uploads/favicon.ico" type="image/x-icon">
+    </head>
+    <body>
+        <!-- App container -->
+        <div class="container-fluid">
+            <div class="row d-flex" id="top-bar">
+                <iframe class="timewidget" id="timewidget-fake" style="padding: 14px 10px 0; float: left;" src="https://freesecure.timeanddate.com/clock/i6zogrqs/n179/fn8/fs20/fcfcf6fa/tct/pct/ahl/ftb/tt0/tm3/th2/ts1/tb1" frameborder="0" width="447" height="25" allowTransparency="true"></iframe>
+                <div class="mr-auto">
+                    <iframe class="timewidget" id="timewidget-real" style="padding: 11px 10px 0; float: left;" src="https://free.timeanddate.com/clock/i7yyk735/n421/fn8/fs26/fcfff/tct/pct/ahl/ftb/pl10/pr0/pt0/pb0/tt0/tm3/ts1" frameborder="0" width="619" height="30" allowtransparency="true"></iframe>
+                </div>
+                <div class="file-title" style="padding: 6px 10px 0 10px;">
+                    <b>Harold: <span id="harold-file-name"></span></b>
+                </div>
+                <div class="js-title" style="padding: 6px 10px 0 10px;">
+                    <b>jumpstart.csh.rit.edu</b>
+                </div>
             </div>
-            <div class="file-title" style="padding: 6px 10px 0 10px;">
-                <b>Harold: <span id="harold-file-name"></span></b>
-            </div>
-            <div class="js-title" style="padding: 6px 10px 0 10px;">
-                <b>jumpstart.csh.rit.edu</b>
-            </div>
-        </div>
-        <!-- Left Set (DD, Announce, Weather, Show T) -->
-        <div class="row justify-content-around">
-            <div class="col-md-10" style="align-content: left; overflow: hidden;" align="left">
-                <!-- DataDog -->
-                <iframe class="datadog" id="datadog" scrolling="no" frameborder="0" src="https://p.datadoghq.com/sb/44f16805b-cab847d58c?tv_mode=true&theme=dark"></iframe>
-                <!-- Announcements -->
-                <div class="announcements">
-                    <div class="panel panel-primary" style="overflow: hidden;">
-                        <div class="panel-heading">
-                            <b><span class="announcements-text-header">Announcements</span></b>
+            <!-- Left Set (DD, Announce, Weather, Show T) -->
+            <div class="row justify-content-around">
+                <div class="col-md-10" style="align-content: left; overflow: hidden;" align="left">
+                    <!-- DataDog -->
+                    <!-- Old Dash Link - https://p.datadoghq.com/sb/44f16805b-cab847d58c -->
+                    <iframe class="datadog" id="datadog" scrolling="no" frameborder="0" src="https://p.datadoghq.com/sb/44f16805b-4c2038873e353ef6fbb5cd49d9d2b1ac?theme=light&tv_mode=true&from_ts=1632504844081&to_ts=1632508444081&live=true?"></iframe>
+                    <!-- Announcements -->
+                    <div class="announcements">
+                        <div class="panel panel-primary" style="overflow: hidden;">
+                            <div class="panel-heading">
+                                <b><span class="announcements-text-header">Announcements</span></b>
+                            </div>
+                            <div class="panel-body">
+                                <div class="plug-body">
+                                    <b><span class="announcements-text-body" id="announcement"></span></b>
+                                </div>
+                            </div>
                         </div>
-                        <div class="panel-body">
-                            <div class="plug-body">
-                                <b><span class="announcements-text-body" id="announcement"></span></b>
+                    </div>
+                    <div class="weatherwidget">
+                        <a class="weatherwidget-io" id="weather-image" href="https://forecast7.com/en/43d16n77d61/rochester/?unit=us" data-label_1="ROCHESTER" data-label_2="WEATHER" data-font="Fira Sans" data-icons="Climacons Animated" data-days="100" data-theme="kitty">ROCHESTER WEATHER</a>
+                    </div>
+                    <script type="text/javascript">
+                        !function(d,s,id){var js,fjs=d.getElementsByTagName(s)[0];if(!d.getElementById(id)){js=d.createElement(s);js.id=id;js.src='https://weatherwidget.io/js/widget.min.js';fjs.parentNode.insertBefore(js,fjs);}}(document,'script','weatherwidget-io-js');
+                    </script>
+                    <div class="shower-thoughts">
+                        <div class="panel panel-primary">
+                            <div class="panel-heading">
+                                <b><span class="shower-thoughts-text-header">Shower Thoughts - /r/showerthoughts</span></b>
+                            </div>
+                            <div class="panel-body">
+                                <div class="plug-body">
+                                    <b><span class="shower-thoughts-text-body" id="showerthoughts">Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.</span></b>
+                                </div>
                             </div>
                         </div>
                     </div>
                 </div>
-                <div class="weatherwidget">
-                    <a class="weatherwidget-io" id="weather-image" href="https://forecast7.com/en/43d16n77d61/rochester/?unit=us" data-label_1="ROCHESTER" data-label_2="WEATHER" data-font="Fira Sans" data-icons="Climacons Animated" data-days="100" data-theme="kitty" >ROCHESTER WEATHER</a>
-                </div>
-                <script type="text/javascript">
-                    !function(d,s,id){var js,fjs=d.getElementsByTagName(s)[0];if(!d.getElementById(id)){js=d.createElement(s);js.id=id;js.src='https://weatherwidget.io/js/widget.min.js';fjs.parentNode.insertBefore(js,fjs);}}(document,'script','weatherwidget-io-js');
-                </script>
-                <div class="shower-thoughts">
-                    <div class="panel panel-primary">
-                        <div class="panel-heading">
-                            <b><span class="shower-thoughts-text-header">Shower Thoughts - /r/showerthoughts</span></b>
-                        </div>
-                        <div class="panel-body">
-                            <div class="plug-body">
-                                <b><span class="shower-thoughts-text-body" id="showerthoughts">Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.</span></b>
-                            </div>
-                        </div>
+                <!-- Right Set (Calendar) -->
+                <div class="col-md-2">
+                    <div class="calendar-frame-lvl1" style="float: right;" width="" height="940" frameborder="0" scrolling="no">
+                        <!-- Calendar spawner -->
+                        <b><div id="calendar"></div></b>
                     </div>
                 </div>
             </div>
-            <!-- Right Set (Calendar) -->
-            <div class="col-md-2">
-                <div class="calendar-frame-lvl1" style="float: right;" width="" height="940" frameborder="0" scrolling="no">
-                    <!-- Calendar spawner -->
-                    <b><div id="calendar"></div></b>
-                </div>
-            </div>
         </div>
-    </div>
-<script type="text/javascript">
-function longUpdate(){
-    var date = new Date();
+        <script type="text/javascript">
+            function longUpdate(){
+                var date = new Date();
 
-    if (date.getMonth()+1 == 2 && (date.getDate() == 12 || date.getDate() == 13 || date.getDate() == 14) ){
-        $("body").css("background-image", "url(../static/css/valentinemode.png)");
-    }else if (date.getMonth()+1 == 3 && (date.getDate() == 13) ){
-        $("body").css("background-image", "url(../static/css/jumpstartbang.png)");
-    }else if (date.getMonth()+1 == 10 && (date.getDate() == 29 || date.getDate() == 30 || date.getDate() == 31) ){
-        $("body").css("background-image", "url(../static/css/spookymode.png)");
-    }else if(date.getMonth()+1 == 11 && date.getDate() == 2){
-        $("body").css("background-image", "url(../static/css/duckymode2.png)");
-    }else if(date.getMonth()+1 == 11 || date.getMonth()+1 == 12){
-        $("body").css("background-image", "url(../static/css/wintermode.png)");
-    }else if(9 < date.getHours() && date.getHours() < 18){
-        $("body").css("background-image", "url(../static/css/lightmodeF.png)");
-    }else{
-        $("body").css("background-image", "url(../static/css/darkmodeF.png)");
-    }
+                if (date.getMonth()+1 == 2 && (date.getDate() == 12 || date.getDate() == 13 || date.getDate() == 14) ){
+                    $("body").css("background-image", "url(../static/css/valentinemode.png)");
+                }else if (date.getMonth()+1 == 3 && (date.getDate() == 13) ){
+                    $("body").css("background-image", "url(../static/css/jumpstartbang.png)");
+                }else if (date.getMonth()+1 == 10 && (date.getDate() == 29 || date.getDate() == 30 || date.getDate() == 31) ){
+                    $("body").css("background-image", "url(../static/css/spookymode.png)");
+                }else if(date.getMonth()+1 == 11 && date.getDate() == 2){
+                    $("body").css("background-image", "url(../static/css/duckymode2.png)");
+                }else if(date.getMonth()+1 == 11 || date.getMonth()+1 == 12){
+                    $("body").css("background-image", "url(../static/css/wintermode.png)");
+                }else if(9 < date.getHours() && date.getHours() < 18){
+                    $("body").css("background-image", "url(../static/css/lightmodeF.png)");
+                }else{
+                    $("body").css("background-image", "url(../static/css/darkmodeF.png)");
+                }
 
-    fetch('/calendar', {
-        method: 'GET',
-        mode:'cors',
-        dataType: 'json'
-    })
-    .then(r => r.json())
-    .then(r => {
-        $("#calendar").html(r.data)
-        if(9 < date.getHours() && date.getHours() < 18){
-            $(".panel-body").css("background-color", "white");
-            $(".plug-body").css("background-color", "white");
-            $(".shower-thoughts-text-body").css("background-color", "white");
-            $(".shower-thoughts-text-body").css("color", "black");
-            $(".announcements-text-body").css("color", "black");
-            $(".calendar-frame-lvl1").css("background-color", "white")
-            $(".calendar-text-date").css("color", "black")
-            $(".calendar-text").css("color", "black")
+                fetch('/calendar', {
+                    method: 'GET',
+                    mode:'cors',
+                    dataType: 'json'
+                })
+                .then(r => r.json())
+                .then(r => {
+                    $("#calendar").html(r.data)
+                    if(9 < date.getHours() && date.getHours() < 18){
+                        $(".panel-body").css("background-color", "white");
+                        $(".plug-body").css("background-color", "white");
+                        $(".shower-thoughts-text-body").css("background-color", "white");
+                        $(".shower-thoughts-text-body").css("color", "black");
+                        $(".announcements-text-body").css("color", "black");
+                        $(".calendar-frame-lvl1").css("background-color", "white")
+                        $(".calendar-text-date").css("color", "black")
+                        $(".calendar-text").css("color", "black")
 
-            $("#datadog").attr('src','https://p.datadoghq.com/sb/44f16805b-cab847d58c?tv_mode=true&theme=light&' + new Date().getTime());
-        }else{
-            // $(".calendar-event-container-lvl2").css("background-color", "black");
-            $(".panel-body").css("background-color", "black");
-            $(".plug-body").css("background-color", "black");
-            $(".shower-thoughts-text-body").css("background-color", "black");
-            $(".shower-thoughts-text-body").css("color", "white");
-            $(".announcements-text-body").css("color", "white");
-            $(".calendar-frame-lvl1").css("background-color", "black")
-            $(".calendar-text-date").css("color", "white")
-            $(".calendar-text").css("color", "white")
+                        $("#datadog").attr('src','https://p.datadoghq.com/sb/44f16805b-4c2038873e353ef6fbb5cd49d9d2b1ac?tv_mode=true&theme=light&' + new Date().getTime());
+                    }else{
+                        // $(".calendar-event-container-lvl2").css("background-color", "black");
+                        $(".panel-body").css("background-color", "black");
+                        $(".plug-body").css("background-color", "black");
+                        $(".shower-thoughts-text-body").css("background-color", "black");
+                        $(".shower-thoughts-text-body").css("color", "white");
+                        $(".announcements-text-body").css("color", "white");
+                        $(".calendar-frame-lvl1").css("background-color", "black")
+                        $(".calendar-text-date").css("color", "white")
+                        $(".calendar-text").css("color", "white")
 
-            $("#datadog").attr('src','https://p.datadoghq.com/sb/44f16805b-cab847d58c?tv_mode=true&theme=dark&' + new Date().getTime());
-        }
-    })
-    .catch(err => console.log(err))
-}
+                        $("#datadog").attr('src',' https://p.datadoghq.com/sb/44f16805b-4c2038873e353ef6fbb5cd49d9d2b1ac?tv_mode=true&theme=dark&' + new Date().getTime());
+                    }
+                })
+                .catch(err => console.log(err))
+            }
 
-function mediumUpdate(){
-    fetch('/showerthoughts', {
-        method: 'GET',
-        mode:'cors',
-        dataType: 'json'
-    })
-    .then(r => r.json())
-    .then(r => {
-        $("#showerthoughts").text(r.data)
-    })
-    .catch(err => console.log(err))
+            function mediumUpdate(){
+                fetch('/showerthoughts', {
+                    method: 'GET',
+                    mode:'cors',
+                    dataType: 'json'
+                })
+                .then(r => r.json())
+                .then(r => {
+                    $("#showerthoughts").text(r.data)
+                })
+                .catch(err => console.log(err))
 
-    fetch('/get-announcement', {
-        method: 'GET',
-        mode:'cors',
-        dataType: 'json'
-    })
-    .then(r => r.json())
-    .then(r => {
-        $("#announcement").text(r.data.substring(0, 910))
-    })
-    .catch(err => console.log(err))
-}
+                fetch('/get-announcement', {
+                    method: 'GET',
+                    mode:'cors',
+                    dataType: 'json'
+                })
+                .then(r => r.json())
+                .then(r => {
+                    $("#announcement").text(r.data.substring(0, 910))
+                })
+                .catch(err => console.log(err))
+            }
 
-function shortUpdate(){
-    fetch('/get-harold', {
-        method: 'GET',
-        mode:'cors',
-        dataType: 'json'
-    })
-    .then(r => r.json())
-    .then(r => {
-        $("#harold-file-name").text(r.data)
-    })
-    .catch(err => console.log(err))
-}
+            function shortUpdate(){
+                fetch('/get-harold', {
+                    method: 'GET',
+                    mode:'cors',
+                    dataType: 'json'
+                })
+                .then(r => r.json())
+                .then(r => {
+                    $("#harold-file-name").text(r.data)
+                })
+                .catch(err => console.log(err))
+            }
 
-shortUpdate();
-mediumUpdate();
-longUpdate();
+            shortUpdate();
+            mediumUpdate();
+            longUpdate();
 
-// Date background changes
-setInterval(function(){
-    longUpdate();   
-}, 360000);
+            // Date background changes
+            setInterval(function(){
+                longUpdate();   
+            }, 360000);
 
-// Calendar and shower thoughts refresh
-setInterval(function(){
-    mediumUpdate();
-}, 13000);
+            // Calendar and shower thoughts refresh
+            setInterval(function(){
+                mediumUpdate();
+            }, 13000);
 
-// Harold and announcement refresh
-setInterval(function(){ 
-    shortUpdate();
-}, 4000);
+            // Harold and announcement refresh
+            setInterval(function(){ 
+                shortUpdate();
+            }, 4000);
 
-// Weather Widget refresh
-setInterval('__weatherwidget_init()', 1800000)
-</script>
-</body>
+            // Weather Widget refresh
+            setInterval('__weatherwidget_init()', 1800000)
+        </script>
+    </body>
 </html>
