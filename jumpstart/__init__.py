@@ -70,7 +70,9 @@ db.session.commit()
 
 @auth.verify_token
 def verify_token(token):
+    print("verify check")
     if token in tokens:
+        print("VERIFIED!!!")
         return True
     return False
 
