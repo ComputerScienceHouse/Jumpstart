@@ -70,10 +70,6 @@ db.session.commit()
 
 @auth.verify_token
 def verify_token(token):
-    print("verify check")
-    print(token)
-    print(tokens)
-    print(api_keys)
     if token in tokens:
         print("VERIFIED!!!")
         return True
