@@ -144,7 +144,7 @@ def get_announcement():
     return jsonify(announcement_post)
 
 @App.route("/update-announcement", methods=["POST"])
-# @auth.login_required
+@auth.login_required
 @limiter.limit("3/hour")
 @limiter.limit("2/minute")
 @limiter.limit("1/second")
