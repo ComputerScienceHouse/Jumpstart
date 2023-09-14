@@ -51,6 +51,7 @@ body{
     overflow: auto;
     border: 8px #34495e solid;
     border-radius: 10px;
+    background-color: #34495e;
     width: 760px;
     height: 580px;
     float: right;
